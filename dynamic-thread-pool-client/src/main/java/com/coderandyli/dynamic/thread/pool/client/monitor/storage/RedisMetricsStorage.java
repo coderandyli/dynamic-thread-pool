@@ -3,9 +3,13 @@ package com.coderandyli.dynamic.thread.pool.client.monitor.storage;
 import com.coderandyli.dynamic.thread.pool.client.monitor.MetricsStorage;
 import com.coderandyli.dynamic.thread.pool.client.monitor.RequestInfo;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author lizhen
@@ -16,9 +20,11 @@ import java.util.Map;
  */
 @Repository
 public class RedisMetricsStorage implements MetricsStorage {
+    private static final List<RequestInfo> requestInfos = new ArrayList<>();
+
     @Override
     public void saveRequestInfo(RequestInfo requestInfo) {
-
+        requestInfos.add(requestInfo);
     }
 
     @Override
@@ -28,6 +34,22 @@ public class RedisMetricsStorage implements MetricsStorage {
 
     @Override
     public Map<String, List<RequestInfo>> getAllRequestInfosByDuration(long startTime, long endTime) {
-        return null;
+        if (CollectionUtils.isEmpty(requestInfos)) return null;
+
+        Map<String, List<RequestInfo>> resultMap = new HashMap<>();
+        for (RequestInfo requestInfo : requestInfos) {
+            long timestamp = requestInfo.getTimestamp();
+            if (startTime < timestamp && timestamp < endTime){
+                String apiName = requestInfo.getApiName();
+                List<RequestInfo> requestInfoSubList = resultMap.get(apiName);
+                if (requestInfoSubList == null){
+                    requestInfoSubList = new ArrayList<>();
+                }
+                requestInfoSubList.add(requestInfo);
+                resultMap.put(apiName, requestInfoSubList);
+            }
+        }
+
+        return resultMap;
     }
 }

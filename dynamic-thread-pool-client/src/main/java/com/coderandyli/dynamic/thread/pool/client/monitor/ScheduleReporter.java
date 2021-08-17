@@ -1,8 +1,4 @@
 package com.coderandyli.dynamic.thread.pool.client.monitor;
-
-
-import com.coderandyli.dynamic.thread.pool.client.monitor.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +10,6 @@ import java.util.Map;
  * (why) the common code is extracted in this class
  *
  * (how)
- *
  */
 public abstract class ScheduleReporter {
     private static final long MAX_STAT_DURATION_IN_MILLIS = 10 * 60 * 1000; // 10minutes
@@ -69,8 +64,14 @@ public abstract class ScheduleReporter {
         for (Map.Entry<String, RequestStat> entry : segmentStat.entrySet()) {
             String apiName = entry.getKey();
             RequestStat stat = entry.getValue();
-            List<RequestStat> statList = segmentStats.putIfAbsent(apiName, new ArrayList<>());
+
+            List<RequestStat> statList = segmentStats.get(apiName);
+            if (statList == null){
+                statList = new ArrayList<>();
+            }
             statList.add(stat);
+            segmentStats.put(apiName, statList);
+            // List<RequestStat> statList = segmentStats.putIfAbsent(apiName, new ArrayList<>());
         }
     }
 

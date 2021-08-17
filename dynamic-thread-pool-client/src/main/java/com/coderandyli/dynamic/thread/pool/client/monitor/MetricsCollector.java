@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
  * 提供API, 采集接口请求的原始数据
  *
  * 为防止一次性加载太多数据到内存，导致内存吃紧，甚至内存溢出
- *      采用 Google Guava EventBus 生产者-消费者模型，将采集的数据先放入内存共享队列中，另一个县城读取共享队列中的数据，写入到外部存储中，
+ *      采用 Google Guava EventBus 生产者-消费者模型，将采集的数据先放入内存共享队列中，另一个线程读取共享队列中的数据，写入到外部存储中，
  */
 @Component
 public class MetricsCollector {
