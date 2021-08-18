@@ -1,7 +1,7 @@
-package com.coderandyli.dynamic.thread.pool.client.monitor.storage;
+package com.coderandyli.dynamic.thread.pool.client.reference.storage;
 
-import com.coderandyli.dynamic.thread.pool.client.monitor.MetricsStorage;
-import com.coderandyli.dynamic.thread.pool.client.monitor.RequestInfo;
+import com.coderandyli.dynamic.thread.pool.client.reference.MetricsStorage;
+import com.coderandyli.dynamic.thread.pool.client.reference.RequestInfo;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author lizhen

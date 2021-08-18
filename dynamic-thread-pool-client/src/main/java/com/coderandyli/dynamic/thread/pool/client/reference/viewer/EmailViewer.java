@@ -1,9 +1,9 @@
-package com.coderandyli.dynamic.thread.pool.client.monitor.viewer;
+package com.coderandyli.dynamic.thread.pool.client.reference.viewer;
 
 
-import com.coderandyli.dynamic.thread.pool.client.monitor.EmailSender;
-import com.coderandyli.dynamic.thread.pool.client.monitor.RequestStat;
-import com.coderandyli.dynamic.thread.pool.client.monitor.StatViewer;
+import com.coderandyli.dynamic.thread.pool.client.reference.EmailSender;
+import com.coderandyli.dynamic.thread.pool.client.reference.RequestStat;
+import com.coderandyli.dynamic.thread.pool.client.reference.StatViewer;
 
 import java.util.ArrayList;
 import java.util.List;

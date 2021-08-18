@@ -22,7 +22,6 @@
             <artifactId>spring-boot-starter</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -32,6 +31,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring-boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.coderandyli</groupId>
+            <artifactId>dynamic-thread-pool-client</artifactId>
+            <version>${dynamic-thread-pool-client.version}</version>
         </dependency>
     </dependencies>
 

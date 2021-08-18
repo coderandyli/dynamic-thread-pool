@@ -19,7 +19,6 @@ public class SystemController {
 
     /**
      * 系统健康
-     *
      * @return
      */
     @GetMapping("/health")

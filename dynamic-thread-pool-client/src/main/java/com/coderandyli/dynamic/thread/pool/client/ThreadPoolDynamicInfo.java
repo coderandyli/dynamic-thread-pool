@@ -3,6 +3,7 @@ package com.coderandyli.dynamic.thread.pool.client;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
@@ -16,7 +17,16 @@ import java.util.concurrent.RejectedExecutionHandler;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ThreadPoolDynamicInfo {
+    /**
+     * 1: 业务触发；2: 定时收集
+     */
+    private Integer type;
+    /**
+     * 应用名称
+     */
+    private String applicationName;
     /**
      * 线程池名称
      */

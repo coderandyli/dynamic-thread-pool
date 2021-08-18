@@ -1,7 +1,7 @@
-package com.coderandyli.dynamic.thread.pool.client.monitor;
+package com.coderandyli.dynamic.thread.pool.client.reference;
 
-import com.coderandyli.dynamic.thread.pool.client.monitor.storage.RedisMetricsStorage;
-import com.coderandyli.dynamic.thread.pool.client.monitor.viewer.ConsoleViewer;
+import com.coderandyli.dynamic.thread.pool.client.reference.storage.RedisMetricsStorage;
+import com.coderandyli.dynamic.thread.pool.client.reference.viewer.ConsoleViewer;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

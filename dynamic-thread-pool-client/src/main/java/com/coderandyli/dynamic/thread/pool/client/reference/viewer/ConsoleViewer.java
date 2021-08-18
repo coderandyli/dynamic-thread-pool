@@ -1,8 +1,8 @@
-package com.coderandyli.dynamic.thread.pool.client.monitor.viewer;
+package com.coderandyli.dynamic.thread.pool.client.reference.viewer;
 
 
-import com.coderandyli.dynamic.thread.pool.client.monitor.RequestStat;
-import com.coderandyli.dynamic.thread.pool.client.monitor.StatViewer;
+import com.coderandyli.dynamic.thread.pool.client.reference.RequestStat;
+import com.coderandyli.dynamic.thread.pool.client.reference.StatViewer;
 import com.google.gson.Gson;
 
 import java.util.Map;

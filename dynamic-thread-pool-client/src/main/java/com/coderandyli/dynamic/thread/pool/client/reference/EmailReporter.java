@@ -1,8 +1,8 @@
-package com.coderandyli.dynamic.thread.pool.client.monitor;
+package com.coderandyli.dynamic.thread.pool.client.reference;
 
 
-import com.coderandyli.dynamic.thread.pool.client.monitor.storage.RedisMetricsStorage;
-import com.coderandyli.dynamic.thread.pool.client.monitor.viewer.EmailViewer;
+import com.coderandyli.dynamic.thread.pool.client.reference.storage.RedisMetricsStorage;
+import com.coderandyli.dynamic.thread.pool.client.reference.viewer.EmailViewer;
 import com.google.common.annotations.VisibleForTesting;
 
 import java.util.*;

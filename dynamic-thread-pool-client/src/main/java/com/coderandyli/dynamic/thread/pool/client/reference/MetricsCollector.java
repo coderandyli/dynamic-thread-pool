@@ -1,6 +1,6 @@
-package com.coderandyli.dynamic.thread.pool.client.monitor;
+package com.coderandyli.dynamic.thread.pool.client.reference;
 
-import com.coderandyli.dynamic.thread.pool.client.monitor.storage.RedisMetricsStorage;
+import com.coderandyli.dynamic.thread.pool.client.reference.storage.RedisMetricsStorage;
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;

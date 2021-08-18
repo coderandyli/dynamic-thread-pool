@@ -13,25 +13,44 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
     /**
+     * 应用名称
+     */
+    private String applicationName;
+    /**
      * 线程池名称
      */
     private String poolName;
+    /**
+     * 原始数据存储
+     */
+    private MetricsStorage metricsStorage;
+    /**
+     * 线程任务执行信息
+     */
+    private ThreadTaskInfo taskInfo;
 
-    public DynamicThreadPoolExecutor(String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
-        this(poolName, corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, newNamedThreadFactory(poolName));
+
+    public DynamicThreadPoolExecutor(String applicationName, String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
+        this(applicationName, poolName, corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, newNamedThreadFactory(poolName));
     }
 
-    public DynamicThreadPoolExecutor(String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {
-        this(poolName, corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, defaultRejectHandler);
+    public DynamicThreadPoolExecutor(String applicationName, String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {
+        this(applicationName, poolName, corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, defaultRejectHandler);
     }
 
-    public DynamicThreadPoolExecutor(String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, RejectedExecutionHandler handler) {
-        this(poolName, corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, newNamedThreadFactory(poolName), handler);
+    public DynamicThreadPoolExecutor(String applicationName, String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, RejectedExecutionHandler handler) {
+        this(applicationName, poolName, corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, newNamedThreadFactory(poolName), handler);
     }
 
-    public DynamicThreadPoolExecutor(String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler) {
+    public DynamicThreadPoolExecutor(String applicationName, String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler) {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, handler);
         this.poolName = poolName;
+        this.metricsStorage = (MetricsStorage) SpringContextUtils.getBean("localMemoryMetricsStorage");
+        this.taskInfo = new ThreadTaskInfo();
+        this.applicationName = applicationName;
+
+        ExecutorManager executorManager = ExecutorManager.getInstance();
+        executorManager.registerExecutorService(poolName, this);
     }
 
     @Override
@@ -47,26 +66,33 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
         // ThreadPool going to immediately be shutdown
         // 记录被丢弃的任务, 暂时只记录日志, 后续可根据业务场景做进一步处理
         List<Runnable> dropTasks = null;
-            dropTasks = super.shutdownNow();
+        dropTasks = super.shutdownNow();
         return dropTasks;
     }
 
     @Override
     protected void beforeExecute(Thread t, Runnable r) {
         // TODO: 2021/8/16 记录线程池实时状态
+
+        // 记录线程任务数据
+        taskInfo.setTaskName(t.getName());
+        taskInfo.setTimestamp(System.currentTimeMillis());
         super.beforeExecute(t, r);
     }
 
     @Override
     protected void afterExecute(Runnable r, Throwable t) {
         // TODO: 2021/8/16 记录线程池实时状态
+
+        // 记录并存储任务数据
+        taskInfo.setResponseTime((double) System.currentTimeMillis() - taskInfo.getTimestamp());
+        saveTaskInfo();
         super.afterExecute(r, t);
     }
 
     public static ThreadFactory newNamedThreadFactory(String name) {
         return new NamedThreadFactory(name);
     }
-
 
     /**
      * 线程工厂类，参考{@link Executors#DefaultThreadFactory}
@@ -126,8 +152,19 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
         }
     }
 
+    public String getApplicationName() {
+        return applicationName;
+    }
 
     public String getPoolName() {
         return poolName;
     }
+
+    /**
+     * 存储任务数据
+     */
+    private void saveTaskInfo() {
+        this.metricsStorage.saveTaskInfo(taskInfo);
+    }
+
 }
