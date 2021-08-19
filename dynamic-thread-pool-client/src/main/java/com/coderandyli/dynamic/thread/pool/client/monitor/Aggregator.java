@@ -16,6 +16,8 @@ import java.util.stream.DoubleStream;
  * @date 2020/1/3 上午9:52
  */
 public class Aggregator {
+    private static final double PERCENT99 = 0.99d;
+    private static final double PERCENT999 = 0.999d;
 
     public Map<String, RequestStat> aggregate(Map<String, List<ThreadTaskInfo>> requestInfos, long durationInMillis) {
         Map<String, RequestStat> requestStats = new HashMap<>();
@@ -68,11 +70,11 @@ public class Aggregator {
     }
 
     private double percentile999(List<Double> dataset) {
-        return percentile(dataset, 0.999);
+        return percentile(dataset, PERCENT999);
     }
 
     private double percentile99(List<Double> dataset) {
-        return percentile(dataset, 0.99);
+        return percentile(dataset, PERCENT99);
     }
 
     private double percentile(List<Double> dataset, double ratio) {
