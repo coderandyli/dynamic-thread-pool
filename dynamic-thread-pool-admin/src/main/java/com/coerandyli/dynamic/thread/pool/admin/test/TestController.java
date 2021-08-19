@@ -1,6 +1,6 @@
 package com.coerandyli.dynamic.thread.pool.admin.test;
 
-import com.coderandyli.dynamic.thread.pool.client.monitor.MetricsStorage;
+import com.coderandyli.dynamic.thread.pool.client.monitor.metrics.MetricsStorage;
 import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadPoolDynamicInfo;
 import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadTaskInfo;
 import lombok.extern.slf4j.Slf4j;

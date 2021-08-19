@@ -25,7 +25,7 @@ public class AggregatorTest {
 
 
     @Test
-    public void doAggregate() {
+    public void doAggregateTest() {
         List<ThreadTaskInfo> taskInfos = new ArrayList<>();
 
         for (int i = 500; i > 0 ; i--) {

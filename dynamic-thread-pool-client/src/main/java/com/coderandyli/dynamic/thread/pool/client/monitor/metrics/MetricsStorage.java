@@ -1,4 +1,7 @@
-package com.coderandyli.dynamic.thread.pool.client.monitor;
+package com.coderandyli.dynamic.thread.pool.client.monitor.metrics;
+
+import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadPoolDynamicInfo;
+import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadTaskInfo;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.coderandyli.dynamic.thread.pool.client.monitor;
+package com.coderandyli.dynamic.thread.pool.client.monitor.metrics;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
