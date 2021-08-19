@@ -25,14 +25,25 @@ public class BizThreadPoolConfig {
      */
     @Bean(value = "bizOrderThreadPool")
     public ThreadPoolExecutor buildBizOrderQueueThreadPool() {
+//        DynamicThreadPoolExecutor dynamicThreadPoolExecutor = new DynamicThreadPoolExecutor(
+//                "test-app",
+//                "biz-order",
+//                2 * NCPUS,
+//                25 * NCPUS,
+//                20,
+//                TimeUnit.MILLISECONDS,
+//                new SynchronousQueue<>());
+
+        // 模拟任务拒绝
         DynamicThreadPoolExecutor dynamicThreadPoolExecutor = new DynamicThreadPoolExecutor(
                 "test-app",
                 "biz-order",
-                2 * NCPUS,
-                25 * NCPUS,
+                2,
+                4,
                 20,
                 TimeUnit.MILLISECONDS,
                 new SynchronousQueue<>());
+
         return dynamicThreadPoolExecutor;
     }
 }

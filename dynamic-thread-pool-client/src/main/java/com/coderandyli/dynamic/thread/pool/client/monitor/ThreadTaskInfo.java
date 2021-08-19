@@ -1,4 +1,4 @@
-package com.coderandyli.dynamic.thread.pool.client;
+package com.coderandyli.dynamic.thread.pool.client.monitor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

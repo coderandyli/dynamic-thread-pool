@@ -1,4 +1,4 @@
-package com.coderandyli.dynamic.thread.pool.client;
+package com.coderandyli.dynamic.thread.pool.client.monitor;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
@@ -12,15 +12,24 @@ import java.util.*;
  * @Created by lizhenzhen
  */
 @Repository("localMemoryMetricsStorage")
-public class LocalMemoryMetricsStorage implements MetricsStorage{
+public class LocalMemoryMetricsStorage implements MetricsStorage {
     /**
      * 原始任务数据集合
      */
     private static final List<ThreadTaskInfo> taskInfos = new ArrayList<>();
+    /**
+     * 原始线程池数据集合
+     */
+    private static final List<ThreadPoolDynamicInfo> threadPoolInfos = new ArrayList<>();
 
     @Override
     public void saveTaskInfo(ThreadTaskInfo taskInfo) {
-            taskInfos.add(taskInfo);
+        taskInfos.add(taskInfo);
+    }
+
+    @Override
+    public void saveThreadPoolInfo(ThreadPoolDynamicInfo threadPoolInfo) {
+        threadPoolInfos.add(threadPoolInfo);
     }
 
     @Override
@@ -40,11 +49,22 @@ public class LocalMemoryMetricsStorage implements MetricsStorage{
         Map<String, List<ThreadTaskInfo>> resultMap = new HashMap<>();
         for (ThreadTaskInfo taskInfo : taskInfos) {
             long timestamp = taskInfo.getTimestamp();
-            if ((startTime <= timestamp && timestamp <= endTime) || (startTime == 0 && endTime == 0)){
+            if ((startTime <= timestamp && timestamp <= endTime) || (startTime == 0 && endTime == 0)) {
                 List<ThreadTaskInfo> taskInfoSubList = resultMap.computeIfAbsent(taskInfo.getTaskName(), k -> new ArrayList<>());
                 taskInfoSubList.add(taskInfo);
             }
         }
         return resultMap;
+    }
+
+    @Override
+    public ThreadPoolDynamicInfo queryLastThreadPoolInfo() {
+        if (CollectionUtils.isEmpty(threadPoolInfos)) return null;
+        return threadPoolInfos.get(threadPoolInfos.size() - 1);
+    }
+
+    @Override
+    public List<ThreadPoolDynamicInfo> queryAllThreadPoolInfo() {
+        return threadPoolInfos;
     }
 }

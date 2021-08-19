@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
         "com.coderandyli.dynamic.thread.pool.client",
         "com.coerandyli.dynamic.thread.pool.admin.controller",
         "com.coerandyli.dynamic.thread.pool.admin.test",
+        "com.coderandyli.dynamic.thread.pool.client.monitor"
 })
 public class AdminApplication {
 

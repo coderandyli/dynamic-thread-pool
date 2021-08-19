@@ -1,6 +1,9 @@
 package com.coderandyli.dynamic.thread.pool.client;
 
-import java.text.MessageFormat;
+import com.coderandyli.dynamic.thread.pool.client.monitor.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,21 +24,24 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
      */
     private String poolName;
     /**
-     * 原始数据存储
+     * 线程池唯一识别号
      */
-    private MetricsStorage metricsStorage;
+    private String uniqueId;
     /**
      * 线程任务执行信息
      */
     private ThreadTaskInfo taskInfo;
-
+    /**
+     * 数据采集
+     */
+    private MetricsCollector metricsCollector;
 
     public DynamicThreadPoolExecutor(String applicationName, String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
         this(applicationName, poolName, corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, newNamedThreadFactory(poolName));
     }
 
     public DynamicThreadPoolExecutor(String applicationName, String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {
-        this(applicationName, poolName, corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, defaultRejectHandler);
+        this(applicationName, poolName, corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, countRejectHandler);
     }
 
     public DynamicThreadPoolExecutor(String applicationName, String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, RejectedExecutionHandler handler) {
@@ -45,24 +51,24 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
     public DynamicThreadPoolExecutor(String applicationName, String poolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler) {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, handler);
         this.poolName = poolName;
-        this.metricsStorage = (MetricsStorage) SpringContextUtils.getBean("localMemoryMetricsStorage");
+        this.metricsCollector = (MetricsCollector) SpringContextUtils.getBean("metricsCollector");
         this.taskInfo = new ThreadTaskInfo();
         this.applicationName = applicationName;
 
-        ExecutorManager executorManager = ExecutorManager.getInstance();
-        executorManager.registerExecutorService(poolName, this);
+        // 注册线程池
+        this.metricsCollector.registerExecutorService(this);
     }
 
     @Override
     public void shutdown() {
-        // TODO: 2021/8/16 记录线程池实时状态
         // ThreadPool will be shutdown:
+        saveThreadPoolInfo();
         super.shutdown();
     }
 
     @Override
     public List<Runnable> shutdownNow() {
-        // TODO: 2021/8/16 记录线程池实时状态
+        saveThreadPoolInfo();
         // ThreadPool going to immediately be shutdown
         // 记录被丢弃的任务, 暂时只记录日志, 后续可根据业务场景做进一步处理
         List<Runnable> dropTasks = null;
@@ -72,7 +78,7 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
 
     @Override
     protected void beforeExecute(Thread t, Runnable r) {
-        // TODO: 2021/8/16 记录线程池实时状态
+        saveThreadPoolInfo();
 
         // 记录线程任务数据
         taskInfo.setTaskName(t.getName());
@@ -82,11 +88,10 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
 
     @Override
     protected void afterExecute(Runnable r, Throwable t) {
-        // TODO: 2021/8/16 记录线程池实时状态
-
         // 记录并存储任务数据
         taskInfo.setResponseTime((double) System.currentTimeMillis() - taskInfo.getTimestamp());
         saveTaskInfo();
+        saveThreadPoolInfo();
         super.afterExecute(r, t);
     }
 
@@ -128,7 +133,6 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
     private static final RejectedExecutionHandler defaultRejectHandler = new ThreadPoolExecutor.AbortPolicy();
     public static final RejectedExecutionHandler countRejectHandler = new CountRejectedHandler();
 
-
     public static RejectedExecutionHandler getDefaultRejectHandler() {
         return defaultRejectHandler;
     }
@@ -145,8 +149,7 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
         public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
             if (executor instanceof DynamicThreadPoolExecutor) {
                 DynamicThreadPoolExecutor dynamicThreadPoolExecutor = (DynamicThreadPoolExecutor) executor;
-                // TODO: 2021/8/16 记录任务拒绝次数
-                // ThreadPoolRejectMetricManager.increment(namedThreadPoolExecutor.getPoolName());
+                ThreadPoolRejectMetricManager.increment(dynamicThreadPoolExecutor.getUniqueId());
             }
             defaultRejectHandler.rejectedExecution(r, executor);
         }
@@ -161,10 +164,30 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
     }
 
     /**
+     * 线程池唯一识别号（即threaPoolId）
+     */
+    public String getUniqueId() {
+        return this.applicationName + ":" +
+                this.poolName;
+    }
+
+    /**
      * 存储任务数据
      */
     private void saveTaskInfo() {
-        this.metricsStorage.saveTaskInfo(taskInfo);
+        this.metricsCollector.recordTask(taskInfo);
     }
 
+    /**
+     * 存储线程池信息
+     */
+    public void saveThreadPoolInfo() {
+        ThreadPoolDynamicInfo threadPoolInfo = new ThreadPoolDynamicInfo();
+        BeanUtils.copyProperties(this, threadPoolInfo);
+        threadPoolInfo.setType(1);
+        threadPoolInfo.setRejectCount(
+                ThreadPoolRejectMetricManager.get(this.getUniqueId())
+        );
+        this.metricsCollector.recordThreadPoolInfo(threadPoolInfo);
+    }
 }

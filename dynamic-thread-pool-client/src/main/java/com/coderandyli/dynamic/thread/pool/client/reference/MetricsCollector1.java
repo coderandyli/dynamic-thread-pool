@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
  *      采用 Google Guava EventBus 生产者-消费者模型，将采集的数据先放入内存共享队列中，另一个线程读取共享队列中的数据，写入到外部存储中，
  */
 @Component
-public class MetricsCollector {
+public class MetricsCollector1 {
     private static final int DEFAULT_STORAGE_THREAD_POOL_SIZE = 20;
 
     private MetricsStorage metricsStorage; // 基于接口而非实现编程
@@ -28,16 +28,16 @@ public class MetricsCollector {
     private EventBus eventBus;
 
     // 兼顾代码的易用性，新增一个封装了默认依赖的构造函数
-    public MetricsCollector() {
+    public MetricsCollector1() {
         this(new RedisMetricsStorage());
     }
 
     // 兼顾灵活性和代码的可测试性，这个构造函数继续保留
-    public MetricsCollector(MetricsStorage metricsStorage) {
+    public MetricsCollector1(MetricsStorage metricsStorage) {
         this(metricsStorage, DEFAULT_STORAGE_THREAD_POOL_SIZE);
     }
 
-    public MetricsCollector(MetricsStorage metricsStorage, int threadNumToSaveData) {
+    public MetricsCollector1(MetricsStorage metricsStorage, int threadNumToSaveData) {
         this.metricsStorage = metricsStorage;
         this.eventBus = new AsyncEventBus(Executors.newFixedThreadPool(threadNumToSaveData));
         this.eventBus.register(new EventListener());

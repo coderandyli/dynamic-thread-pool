@@ -1,6 +1,7 @@
 package com.coderandyli.dynamic.thread.pool.client.reference;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * @author lizhen
@@ -8,6 +9,7 @@ import lombok.Data;
  * @date 2020/1/3 上午10:45
  */
 @Data
+@ToString
 public class RequestStat {
     /**
      * 最大响应时间
@@ -36,12 +38,12 @@ public class RequestStat {
     /**
      * tps
      */
-    private long tps;
+    private int tps;
 
     public RequestStat() {
     }
 
-    public RequestStat(Double maxResponseTime, Double minResponseTime, Double avgResponseTime, Double p999ResponseTime, Double p99ResponseTime, long count, long tps) {
+    public RequestStat(Double maxResponseTime, Double minResponseTime, Double avgResponseTime, Double p999ResponseTime, Double p99ResponseTime, long count, int tps) {
         this.maxResponseTime = maxResponseTime;
         this.minResponseTime = minResponseTime;
         this.avgResponseTime = avgResponseTime;

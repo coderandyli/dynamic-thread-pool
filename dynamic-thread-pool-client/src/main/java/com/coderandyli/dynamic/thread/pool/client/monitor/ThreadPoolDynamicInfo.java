@@ -1,4 +1,4 @@
-package com.coderandyli.dynamic.thread.pool.client;
+package com.coderandyli.dynamic.thread.pool.client.monitor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +31,10 @@ public class ThreadPoolDynamicInfo {
      * 线程池名称
      */
     private String poolName;
+    /**
+     * 线程池唯一识别号
+     */
+    private String uniqueId;
     /**
      * 活跃线程数（workers中工作线程数）
      */
@@ -72,4 +76,13 @@ public class ThreadPoolDynamicInfo {
      * 任务数（已完成的任务 + 正在进行中的任务）
      */
     private int taskCount;
+    /**
+     * 任务拒绝次数
+     */
+    private int rejectCount;
+    /**
+     * 生成时间
+     */
+    private long createTime;
+
 }

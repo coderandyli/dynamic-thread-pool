@@ -39,7 +39,7 @@ public class Aggregator {
         requestStat.setP999ResponseTime(percentile999(respTimes));
         requestStat.setP99ResponseTime(percentile99(respTimes));
         requestStat.setCount(respTimes.size());
-        requestStat.setTps((long) tps(respTimes.size(), durationInMillis/1000));
+        // requestStat.setTps((long) tps(respTimes.size(), durationInMillis/1000));
         return requestStat;
     }
 

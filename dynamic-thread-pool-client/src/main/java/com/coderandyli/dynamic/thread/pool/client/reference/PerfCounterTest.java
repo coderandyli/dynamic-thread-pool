@@ -14,7 +14,7 @@ public class PerfCounterTest {
         emailReporter.startDailyReport();
 
         // 收集接口访问数据
-        MetricsCollector collector = new MetricsCollector();
+        MetricsCollector1 collector = new MetricsCollector1();
         collector.recordRequest(new RequestInfo("register", 10d, System.currentTimeMillis()));
         collector.recordRequest(new RequestInfo("register", 11d, System.currentTimeMillis()));
         collector.recordRequest(new RequestInfo("register", 12d, System.currentTimeMillis()));

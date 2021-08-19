@@ -96,7 +96,7 @@ public abstract class ScheduleReporter {
             aggregatedStat.setMinResponseTime(minRespTime);
             aggregatedStat.setAvgResponseTime(sumRespTime / count);
             aggregatedStat.setCount(count);
-            aggregatedStat.setTps(count / durationInMillis * 1000);
+            // aggregatedStat.setTps(count / durationInMillis * 1000);
             aggregatedStats.put(apiName, aggregatedStat);
         }
         return aggregatedStats;
