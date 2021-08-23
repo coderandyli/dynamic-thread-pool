@@ -37,13 +37,13 @@ public class AggregatorTest {
         }
 
 
-        RequestStat requestStat = aggregator.doAggregate(taskInfos, 3 * 1000);
-        System.out.println(requestStat.toString());
+        TaskStat taskStat = aggregator.doAggregate(taskInfos, 3 * 1000);
+        System.out.println(taskStat.toString());
 
-        Assert.assertEquals(requestStat.getMinResponseTime(), 1.0d, 0.1d);
-        Assert.assertEquals(requestStat.getMaxResponseTime(), 500d, 0.1d);
-        Assert.assertEquals(requestStat.getP99ResponseTime(), 495.0d,0.1d);
-        Assert.assertEquals(requestStat.getCount(), 500);
-        Assert.assertEquals(requestStat.getTps(), 166);
+        Assert.assertEquals(taskStat.getMinExecuteTime(), 1.0d, 0.1d);
+        Assert.assertEquals(taskStat.getMaxExecuteTime(), 500d, 0.1d);
+        Assert.assertEquals(taskStat.getP99ExecuteTime(), 495.0d,0.1d);
+        Assert.assertEquals(taskStat.getCount(), 500);
+        Assert.assertEquals(taskStat.getTps(), 166);
     }
 }

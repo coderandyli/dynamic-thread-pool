@@ -8,11 +8,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 发送捅进数据到命令行
+ *
  * @author lizhen
  * @version 1.0
  * @date 2020/1/3 上午9:52
- * <p>
- * 发送捅进数据到命令行
  */
 public class ConsoleReporter extends ScheduleReporter {
     private ScheduledExecutorService executor;

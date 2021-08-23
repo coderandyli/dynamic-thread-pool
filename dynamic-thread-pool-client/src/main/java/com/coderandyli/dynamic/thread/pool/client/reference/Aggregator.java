@@ -43,7 +43,6 @@ public class Aggregator {
         return requestStat;
     }
 
-    // TODO: 2021/8/16 实现以下的函数的代码实现
     private double max(List<Double> dataset) {
         return 0d;
     }

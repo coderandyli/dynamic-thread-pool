@@ -1,5 +1,6 @@
 package com.coerandyli.dynamic.thread.pool.admin.test;
 
+import com.coderandyli.dynamic.thread.pool.client.monitor.ConsoleReporter;
 import com.coderandyli.dynamic.thread.pool.client.monitor.metrics.MetricsStorage;
 import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadPoolDynamicInfo;
 import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadTaskInfo;
@@ -30,6 +31,9 @@ public class TestController {
     @Autowired
     private MetricsStorage metricsStorage;
 
+    @Autowired
+    private ConsoleReporter consoleReporter;
+
     @GetMapping("/exec-async-task")
     public void asyncTask() {
         log.info("exec async task, the current is 【{}】", Thread.currentThread().getName());
@@ -43,5 +47,7 @@ public class TestController {
         log.info("线程任务执行数据: 一共执行了【{}】, 分别为【{}】", resultMap.toString());
         List<ThreadPoolDynamicInfo> threadPoolDynamicInfos = metricsStorage.queryAllThreadPoolInfo();
         log.info("线程池基本信息: 一共记录了【{}】条数据，分别为【{}】",threadPoolDynamicInfos.size(), Arrays.toString(threadPoolDynamicInfos.toArray()));
+
+        consoleReporter.startRepeatedReport(10, 30);
     }
 }

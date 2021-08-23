@@ -19,34 +19,34 @@ public class Aggregator {
     private static final double PERCENT99 = 0.99d;
     private static final double PERCENT999 = 0.999d;
 
-    public Map<String, RequestStat> aggregate(Map<String, List<ThreadTaskInfo>> requestInfos, long durationInMillis) {
-        Map<String, RequestStat> requestStats = new HashMap<>();
+    public Map<String, TaskStat> aggregate(Map<String, List<ThreadTaskInfo>> requestInfos, long durationInMillis) {
+        Map<String, TaskStat> taskStats = new HashMap<>();
         for (Map.Entry<String, List<ThreadTaskInfo>> entry : requestInfos.entrySet()) {
             String apiName = entry.getKey();
             List<ThreadTaskInfo> requestInfosPerApi = entry.getValue();
-            RequestStat requestStat = doAggregate(requestInfosPerApi, durationInMillis);
-            requestStats.put(apiName, requestStat);
+            TaskStat taskStat = doAggregate(requestInfosPerApi, durationInMillis);
+            taskStats.put(apiName, taskStat);
         }
-        return requestStats;
+        return taskStats;
     }
 
     @VisibleForTesting
-    protected RequestStat doAggregate(List<ThreadTaskInfo> taskInfos, long durationInMillis) {
+    protected TaskStat doAggregate(List<ThreadTaskInfo> taskInfos, long durationInMillis) {
         List<Double> respTimes = new ArrayList<>();
         for (ThreadTaskInfo requestInfo : taskInfos) {
             double respTime = requestInfo.getResponseTime();
             respTimes.add(respTime);
         }
 
-        RequestStat requestStat = new RequestStat();
-        requestStat.setMaxResponseTime(max(respTimes));
-        requestStat.setMinResponseTime(min(respTimes));
-        requestStat.setAvgResponseTime(avg(respTimes));
-        requestStat.setP999ResponseTime(percentile999(respTimes));
-        requestStat.setP99ResponseTime(percentile99(respTimes));
-        requestStat.setCount(respTimes.size());
-        requestStat.setTps((int) tps(respTimes.size(), durationInMillis / 1000));
-        return requestStat;
+        TaskStat taskStat = new TaskStat();
+        taskStat.setMaxExecuteTime(max(respTimes));
+        taskStat.setMinExecuteTime(min(respTimes));
+        taskStat.setAvgExecuteTime(avg(respTimes));
+        taskStat.setP999ExecuteTime(percentile999(respTimes));
+        taskStat.setP99ExecuteTime(percentile99(respTimes));
+        taskStat.setCount(respTimes.size());
+        taskStat.setTps((int) tps(respTimes.size(), durationInMillis / 1000));
+        return taskStat;
     }
 
     private double max(List<Double> dataset) {
