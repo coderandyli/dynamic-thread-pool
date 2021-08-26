@@ -2,9 +2,7 @@ package com.coderandyli.dynamic.thread.pool.client.monitor.view;
 
 import com.coderandyli.dynamic.thread.pool.client.monitor.TaskStat;
 import com.google.gson.Gson;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 

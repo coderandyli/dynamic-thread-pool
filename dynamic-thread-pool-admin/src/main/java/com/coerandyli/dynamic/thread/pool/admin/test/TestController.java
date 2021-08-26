@@ -1,6 +1,6 @@
 package com.coerandyli.dynamic.thread.pool.admin.test;
 
-import com.coderandyli.dynamic.thread.pool.client.monitor.ConsoleReporter;
+import com.coderandyli.dynamic.thread.pool.client.monitor.reporter.ConsoleReporter;
 import com.coderandyli.dynamic.thread.pool.client.monitor.metrics.MetricsStorage;
 import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadPoolDynamicInfo;
 import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadTaskInfo;
@@ -48,6 +48,7 @@ public class TestController {
         List<ThreadPoolDynamicInfo> threadPoolDynamicInfos = metricsStorage.queryAllThreadPoolInfo();
         log.info("线程池基本信息: 一共记录了【{}】条数据，分别为【{}】",threadPoolDynamicInfos.size(), Arrays.toString(threadPoolDynamicInfos.toArray()));
 
-        consoleReporter.startRepeatedReport(10, 30);
+        // 每30秒查询60秒内的任务执行记录
+        consoleReporter.startRepeatedReport(30, 60);
     }
 }

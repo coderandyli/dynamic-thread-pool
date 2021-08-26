@@ -15,6 +15,10 @@ import lombok.ToString;
 @ToString
 public class ThreadTaskInfo {
     /**
+     * 线程池唯一识别号
+     */
+    private String threadPoolUniqueId;
+    /**
      * 任务名称
      */
     private String taskName;

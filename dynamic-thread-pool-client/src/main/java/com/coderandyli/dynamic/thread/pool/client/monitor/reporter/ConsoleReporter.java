@@ -1,4 +1,4 @@
-package com.coderandyli.dynamic.thread.pool.client.monitor;
+package com.coderandyli.dynamic.thread.pool.client.monitor.reporter;
 import org.springframework.stereotype.Component;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -29,7 +29,6 @@ public class ConsoleReporter extends ScheduleReporter {
                     long durationInMillis = durationInSeconds * 1000;
                     long endTimeInMillis = System.currentTimeMillis();
                     long startTimeInMillis = endTimeInMillis - durationInMillis;
-                    // TODO: 2021/8/23 存在CPU占用率过高，待排查
                     doStatAndReport(startTimeInMillis, endTimeInMillis);
                 }
             }, 0l, periodInSeconds, TimeUnit.SECONDS);

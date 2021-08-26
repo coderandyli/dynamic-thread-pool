@@ -82,6 +82,7 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
         saveThreadPoolInfo();
 
         // 记录线程任务数据
+        taskInfo.setThreadPoolUniqueId(this.getUniqueId());
         taskInfo.setTaskName(t.getName());
         taskInfo.setTimestamp(System.currentTimeMillis());
         super.beforeExecute(t, r);

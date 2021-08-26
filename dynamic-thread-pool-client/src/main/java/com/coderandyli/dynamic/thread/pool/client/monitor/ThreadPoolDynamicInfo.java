@@ -84,5 +84,4 @@ public class ThreadPoolDynamicInfo {
      * 生成时间
      */
     private long createTime;
-
 }
