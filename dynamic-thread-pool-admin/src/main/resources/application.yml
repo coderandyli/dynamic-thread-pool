@@ -1,0 +1,11 @@
+spring:
+  rabbitmq:
+    host: 192.168.30.166
+    port: 5672
+    username: guest
+    password: guest
+
+logging:
+  level:
+    root: info
+    com.coderandyli: debug

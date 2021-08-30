@@ -27,7 +27,7 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
     /**
      * 线程池唯一识别号
      */
-    private String uniqueId;
+    private String id;
     /**
      * 线程任务执行信息
      */
@@ -55,9 +55,7 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
         this.metricsCollector = (MetricsCollector) SpringContextUtils.getBean("metricsCollector");
         this.taskInfo = new ThreadTaskInfo();
         this.applicationName = applicationName;
-
-        // 注册线程池
-        this.metricsCollector.registerExecutorService(this);
+        this.id = getUniqueId();
     }
 
     @Override
@@ -99,6 +97,10 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
 
     public static ThreadFactory newNamedThreadFactory(String name) {
         return new NamedThreadFactory(name);
+    }
+
+    public String getId() {
+        return id;
     }
 
     /**
@@ -167,7 +169,10 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
 
     /**
      * 线程池唯一识别号（即threaPoolId）
+     *
+     * please use {@link #getId()}
      */
+    @Deprecated
     public String getUniqueId() {
         return this.applicationName + ":" +
                 this.poolName;

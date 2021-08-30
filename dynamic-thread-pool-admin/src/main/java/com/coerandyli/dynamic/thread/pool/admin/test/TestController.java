@@ -5,6 +5,7 @@ import com.coderandyli.dynamic.thread.pool.client.monitor.metrics.MetricsStorage
 import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadPoolDynamicInfo;
 import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadTaskInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,9 @@ public class TestController {
 
     @Autowired
     private ConsoleReporter consoleReporter;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @GetMapping("/exec-async-task")
     public void asyncTask() {

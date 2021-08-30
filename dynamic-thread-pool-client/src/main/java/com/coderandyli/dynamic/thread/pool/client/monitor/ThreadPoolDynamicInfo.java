@@ -5,9 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.RejectedExecutionHandler;
-
 /**
  * 线程池动态信息
  *
@@ -19,6 +16,7 @@ import java.util.concurrent.RejectedExecutionHandler;
 @NoArgsConstructor
 @ToString
 public class ThreadPoolDynamicInfo {
+    private static final long serialVersionUID = -9022605335949817923L;
     /**
      * 1: 业务触发；2: 定时收集
      */
@@ -67,11 +65,11 @@ public class ThreadPoolDynamicInfo {
     /**
      * 等待队列
      */
-    private BlockingQueue<Runnable> queue;
+//    private BlockingQueue<Runnable> queue;
     /**
      * 拒绝策略
      */
-    private RejectedExecutionHandler rejectedExecutionHandler;
+    // private RejectedExecutionHandler rejectedExecutionHandler;
     /**
      * 任务数（已完成的任务 + 正在进行中的任务）
      */

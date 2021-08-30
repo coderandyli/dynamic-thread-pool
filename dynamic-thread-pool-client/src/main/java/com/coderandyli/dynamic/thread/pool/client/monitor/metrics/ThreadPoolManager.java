@@ -1,5 +1,7 @@
 package com.coderandyli.dynamic.thread.pool.client.monitor.metrics;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -11,21 +13,12 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @Date 2021/8/18 4:03 下午
  * @Created by lizhenzhen
  */
+@Slf4j
 public class ThreadPoolManager {
     private volatile static ThreadPoolManager instance;
     private final Map<String, ExecutorService> executorServiceMap = new ConcurrentHashMap<>();
 
     public ThreadPoolManager() {
-    }
-
-    /**
-     * register thread pool
-     *
-     * @param threadPoolId 线程池Id
-     * @param executorService
-     */
-    public void registerExecutorService(String threadPoolId, ExecutorService executorService) {
-        executorServiceMap.put(threadPoolId, executorService);
     }
 
     /**
@@ -39,6 +32,17 @@ public class ThreadPoolManager {
             return null;
         }
         return executorServiceMap.get(threadPoolId);
+    }
+
+    /**
+     * register thread pool
+     *
+     * @param threadPoolId    线程池Id
+     * @param executorService
+     */
+    protected void registerExecutorService(String threadPoolId, ExecutorService executorService) {
+        executorServiceMap.put(threadPoolId, executorService);
+        log.debug("The thread pool is successfully registered，the threadPoolId name is 【{}】", threadPoolId);
     }
 
     /**

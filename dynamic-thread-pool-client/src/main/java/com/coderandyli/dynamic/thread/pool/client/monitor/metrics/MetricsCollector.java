@@ -1,12 +1,15 @@
 package com.coderandyli.dynamic.thread.pool.client.monitor.metrics;
 
 import com.coderandyli.dynamic.thread.pool.client.DynamicThreadPoolExecutor;
+import com.coderandyli.dynamic.thread.pool.client.config.RabbitConfig;
+import com.coderandyli.dynamic.thread.pool.client.utils.JsonUtil;
 import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadPoolDynamicInfo;
 import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadTaskInfo;
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +34,9 @@ public class MetricsCollector {
 
     @Autowired
     private MetricsStorage metricsStorage;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     public MetricsCollector() {
         this.eventBus = new AsyncEventBus(Executors.newFixedThreadPool(DEFAULT_STORAGE_THREAD_POOL_SIZE));
@@ -73,13 +79,19 @@ public class MetricsCollector {
 
     public class EventListener {
         @Subscribe
-        public void saveRequestInfo(ThreadTaskInfo requestInfo) {
-            metricsStorage.saveTaskInfo(requestInfo);
+        public void saveRequestInfo(ThreadTaskInfo taskInfo) {
+            metricsStorage.saveTaskInfo(taskInfo);
+
+            // send msg to MQ
+            rabbitTemplate.convertAndSend(RabbitConfig.METRICS_EXCHANGE, RabbitConfig.DTP_METRCS_STORAGE_TASK_ROUTING_KEY, JsonUtil.toJson(taskInfo));
         }
 
         @Subscribe
         public void saveThreadPoolInfo(ThreadPoolDynamicInfo threadPoolInfo) {
             metricsStorage.saveThreadPoolInfo(threadPoolInfo);
+
+            // send msg to MQ
+            rabbitTemplate.convertAndSend(RabbitConfig.METRICS_EXCHANGE, RabbitConfig.DTP_METRCS_STORAGE_THREADPOOL_ROUTING_KEY, JsonUtil.toJson(threadPoolInfo));
         }
     }
 }
