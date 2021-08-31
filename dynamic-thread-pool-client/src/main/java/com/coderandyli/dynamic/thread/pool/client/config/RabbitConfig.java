@@ -33,8 +33,8 @@ public class RabbitConfig {
     /**
      * TOPIC ROUTING KEY FOR QUEUE
      */
-    public static final String DTP_METRCS_STORAGE_TASK_ROUTING_KEY = "dtp.metrcs.storage.task";
-    public static final String DTP_METRCS_STORAGE_THREADPOOL_ROUTING_KEY = "dtp.metrcs.storage.threadpool";
+    public static final String DTP_METRCS_STORAGE_TASK_ROUTING_KEY = "dtp.metrcs.storage_task";
+    public static final String DTP_METRCS_STORAGE_THREADPOOL_ROUTING_KEY = "dtp.metrcs.storage_threadpool";
 
     @Bean
     @Qualifier("metrcsStorageTaskQueue")

@@ -1,5 +1,6 @@
-package com.coerandyli.dynamic.thread.pool.admin;
+package com.coderandyli.dynamic.thread.pool.admin;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -7,11 +8,12 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = {
         "com.coderandyli.dynamic.thread.pool.client",
-        "com.coerandyli.dynamic.thread.pool.admin.controller",
-        "com.coerandyli.dynamic.thread.pool.admin.test",
+        "com.coderandyli.dynamic.thread.pool.admin.controller",
+        "com.coderandyli.dynamic.thread.pool.admin.test",
         "com.coderandyli.dynamic.thread.pool.client.monitor",
-        "com.coerandyli.dynamic.thread.pool.admin.receive"
+        "com.coderandyli.dynamic.thread.pool.admin.receive"
 })
+@MapperScan({"com.coderandyli.dynamic.thread.pool.admin.mapper"})
 public class AdminApplication {
 
     public static void main(String[] args) {

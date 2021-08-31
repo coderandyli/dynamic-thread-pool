@@ -24,6 +24,9 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mbp.boot.version>2.3</mbp.boot.version>
+        <mysql.connector.java.version>5.1.47</mysql.connector.java.version>
+
     </properties>
 
     <dependencies>
@@ -55,4 +58,17 @@
             <version>2.0.6.RELEASE</version>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 管理所有org.springframework.boot的依赖版本，无需单独指定 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

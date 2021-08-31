@@ -31,10 +31,6 @@ public class MetricsCollector {
     private static final int DEFAULT_STORAGE_THREAD_POOL_SIZE = 20;
 
     private EventBus eventBus;
-
-    @Autowired
-    private MetricsStorage metricsStorage;
-
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
@@ -80,16 +76,12 @@ public class MetricsCollector {
     public class EventListener {
         @Subscribe
         public void saveRequestInfo(ThreadTaskInfo taskInfo) {
-            metricsStorage.saveTaskInfo(taskInfo);
-
             // send msg to MQ
             rabbitTemplate.convertAndSend(RabbitConfig.METRICS_EXCHANGE, RabbitConfig.DTP_METRCS_STORAGE_TASK_ROUTING_KEY, JsonUtil.toJson(taskInfo));
         }
 
         @Subscribe
         public void saveThreadPoolInfo(ThreadPoolDynamicInfo threadPoolInfo) {
-            metricsStorage.saveThreadPoolInfo(threadPoolInfo);
-
             // send msg to MQ
             rabbitTemplate.convertAndSend(RabbitConfig.METRICS_EXCHANGE, RabbitConfig.DTP_METRCS_STORAGE_THREADPOOL_ROUTING_KEY, JsonUtil.toJson(threadPoolInfo));
         }

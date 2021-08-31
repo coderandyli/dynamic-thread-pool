@@ -1,7 +1,6 @@
-package com.coerandyli.dynamic.thread.pool.admin.test.config;
+package com.coderandyli.dynamic.thread.pool.admin.test.config;
 
 import com.coderandyli.dynamic.thread.pool.client.DynamicThreadPoolExecutor;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

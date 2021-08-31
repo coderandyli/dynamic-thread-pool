@@ -1,4 +1,4 @@
-package com.coerandyli.dynamic.thread.pool.admin;
+package com.coderandyli.dynamic.thread.pool.admin;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;

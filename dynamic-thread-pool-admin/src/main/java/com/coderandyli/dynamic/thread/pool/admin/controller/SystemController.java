@@ -1,4 +1,4 @@
-package com.coerandyli.dynamic.thread.pool.admin.controller;
+package com.coderandyli.dynamic.thread.pool.admin.controller;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
