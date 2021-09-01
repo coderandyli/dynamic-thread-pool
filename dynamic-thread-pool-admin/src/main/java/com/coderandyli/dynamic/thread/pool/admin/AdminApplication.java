@@ -8,10 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = {
         "com.coderandyli.dynamic.thread.pool.client",
-        "com.coderandyli.dynamic.thread.pool.admin.controller",
-        "com.coderandyli.dynamic.thread.pool.admin.test",
-        "com.coderandyli.dynamic.thread.pool.client.monitor",
-        "com.coderandyli.dynamic.thread.pool.admin.receive"
+        "com.coderandyli.dynamic.thread.pool.monitor",
+        "com.coderandyli.dynamic.thread.pool.admin",
 })
 @MapperScan({"com.coderandyli.dynamic.thread.pool.admin.mapper"})
 public class AdminApplication {

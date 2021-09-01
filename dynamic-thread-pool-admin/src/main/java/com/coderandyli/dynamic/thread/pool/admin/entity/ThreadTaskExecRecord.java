@@ -3,6 +3,7 @@ package com.coderandyli.dynamic.thread.pool.admin.entity;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
   import java.io.Serializable;
@@ -23,7 +24,7 @@ public class ThreadTaskExecRecord extends Model<ThreadTaskExecRecord> {
 	/**
 	 * 
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 线程池业务Id

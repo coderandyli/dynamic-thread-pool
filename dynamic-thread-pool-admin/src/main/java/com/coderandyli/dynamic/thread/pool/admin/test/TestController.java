@@ -1,11 +1,13 @@
 package com.coderandyli.dynamic.thread.pool.admin.test;
 
-import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadPoolDynamicInfo;
-import com.coderandyli.dynamic.thread.pool.client.monitor.ThreadTaskInfo;
-import com.coderandyli.dynamic.thread.pool.client.monitor.metrics.MetricsStorage;
-import com.coderandyli.dynamic.thread.pool.client.monitor.reporter.ConsoleReporter;
+import com.coderandyli.dynamic.thread.pool.admin.service.ThreadTaskExecRecordService;
+import com.coderandyli.dynamic.thread.pool.client.ThreadPoolDynamicInfo;
+import com.coderandyli.dynamic.thread.pool.client.ThreadTaskInfo;
+import com.coderandyli.dynamic.thread.pool.monitor.reporter.ConsoleReporter;
+import com.coderandyli.dynamic.thread.pool.monitor.storage.MetricsStorage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,10 +31,15 @@ public class TestController {
     private ExecutorService orderThreadPool;
 
     @Autowired
+    @Qualifier("mysqlMetricsStorage")
     private MetricsStorage metricsStorage;
 
     @Autowired
     private ConsoleReporter consoleReporter;
+
+    @Autowired
+    private ThreadTaskExecRecordService taskExecRecordService;
+
 
     @GetMapping("/exec-async-task")
     public void asyncTask() {

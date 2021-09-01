@@ -1,8 +1,8 @@
 package com.coderandyli.dynamic.thread.pool.client;
 
-import com.coderandyli.dynamic.thread.pool.client.monitor.*;
-import com.coderandyli.dynamic.thread.pool.client.monitor.metrics.MetricsCollector;
-import com.coderandyli.dynamic.thread.pool.client.monitor.metrics.ThreadPoolRejectMetricManager;
+import com.coderandyli.dynamic.thread.pool.client.metrics.MetricsCollector;
+import com.coderandyli.dynamic.thread.pool.client.metrics.ThreadPoolRejectMetricManager;
+import com.coderandyli.dynamic.thread.pool.client.utils.SpringContextUtils;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
