@@ -1,6 +1,6 @@
 package com.coderandyli.dynamic.thread.pool.monitor;
 
-import com.coderandyli.dynamic.thread.pool.client.ThreadTaskInfo;
+import com.coderandyli.dynamic.thread.pool.core.ThreadTaskInfo;
 import com.google.common.annotations.VisibleForTesting;
 import org.springframework.util.CollectionUtils;
 

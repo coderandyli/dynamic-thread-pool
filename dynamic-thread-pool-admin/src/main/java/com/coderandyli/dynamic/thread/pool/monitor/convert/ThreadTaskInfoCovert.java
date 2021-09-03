@@ -1,7 +1,7 @@
 package com.coderandyli.dynamic.thread.pool.monitor.convert;
 
 import com.coderandyli.dynamic.thread.pool.admin.entity.ThreadTaskExecRecord;
-import com.coderandyli.dynamic.thread.pool.client.ThreadTaskInfo;
+import com.coderandyli.dynamic.thread.pool.core.ThreadTaskInfo;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Date;

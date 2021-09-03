@@ -1,7 +1,7 @@
 package com.coderandyli.dynamic.thread.pool.monitor.reporter;
 
-import com.coderandyli.dynamic.thread.pool.client.ThreadPoolDynamicInfo;
-import com.coderandyli.dynamic.thread.pool.client.ThreadTaskInfo;
+import com.coderandyli.dynamic.thread.pool.core.ThreadPoolDynamicInfo;
+import com.coderandyli.dynamic.thread.pool.core.ThreadTaskInfo;
 import com.coderandyli.dynamic.thread.pool.monitor.Aggregator;
 import com.coderandyli.dynamic.thread.pool.monitor.TaskStat;
 import com.coderandyli.dynamic.thread.pool.monitor.alert.Alert;
@@ -79,8 +79,9 @@ public abstract class ScheduleReporter {
 
             StatInfo statInfo = StatInfo.builder()
                     .threadPoolId(lastThreadPoolInfo.getTpId())
-                    .activeCount(lastThreadPoolInfo.getActiveCount())
+                    .corePoolSize(lastThreadPoolInfo.getCorePoolSize())
                     .maximumPoolSize(lastThreadPoolInfo.getMaximumPoolSize())
+                    .activeCount(lastThreadPoolInfo.getActiveCount())
                     .taskCount(lastThreadPoolInfo.getTaskCount())
                     .completedTaskCount(lastThreadPoolInfo.getCompletedTaskCount())
                     .rejectCount(lastThreadPoolInfo.getRejectCount())
@@ -97,7 +98,7 @@ public abstract class ScheduleReporter {
             alert.check(statInfo);
         }
     }
-    
+
 
     /**
      * todo 防止一次性采集的数据过大，导致内存溢出 分批次采集数据

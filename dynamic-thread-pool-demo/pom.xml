@@ -8,16 +8,13 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>dynamic-thread-pool-admin</artifactId>
+    <artifactId>dynamic-thread-pool-demo</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>dynamic-thread-pool-admin</name>
-    <description>Admin For dynamic thread pool Service</description>
+    <name>dynamic-thread-pool-demo</name>
+    <description>Demo For dynamic thread pool</description>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -27,29 +24,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-        <!--mybatis-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-core</artifactId>
-            <version>${mbp.boot.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mbp.boot.version}</version>
-        </dependency>
-        <!--数据库-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.connector.java.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>com.coderandyli</groupId>
-            <artifactId>dynamic-thread-pool-core</artifactId>
-            <version>${dynamic-thread-pool-core.version}</version>
+            <artifactId>dynamic-thread-pool-client</artifactId>
+            <version>${dynamic-thread-pool-client.version}</version>
         </dependency>
     </dependencies>
 

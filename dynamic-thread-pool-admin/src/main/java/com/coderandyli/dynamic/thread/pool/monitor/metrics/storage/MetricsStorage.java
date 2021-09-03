@@ -1,7 +1,8 @@
 package com.coderandyli.dynamic.thread.pool.monitor.metrics.storage;
 
-import com.coderandyli.dynamic.thread.pool.client.ThreadPoolDynamicInfo;
-import com.coderandyli.dynamic.thread.pool.client.ThreadTaskInfo;
+
+import com.coderandyli.dynamic.thread.pool.core.ThreadPoolDynamicInfo;
+import com.coderandyli.dynamic.thread.pool.core.ThreadTaskInfo;
 
 import java.util.List;
 import java.util.Map;

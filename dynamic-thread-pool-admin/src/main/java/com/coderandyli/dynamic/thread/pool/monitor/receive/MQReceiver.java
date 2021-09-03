@@ -1,10 +1,10 @@
 package com.coderandyli.dynamic.thread.pool.monitor.receive;
 
-import com.coderandyli.dynamic.thread.pool.client.config.RabbitConfig;
-import com.coderandyli.dynamic.thread.pool.client.ThreadPoolDynamicInfo;
-import com.coderandyli.dynamic.thread.pool.client.ThreadTaskInfo;
+import com.coderandyli.dynamic.thread.pool.core.ThreadPoolDynamicInfo;
+import com.coderandyli.dynamic.thread.pool.core.ThreadTaskInfo;
+import com.coderandyli.dynamic.thread.pool.core.config.RabbitConfig;
+import com.coderandyli.dynamic.thread.pool.core.utils.JsonUtil;
 import com.coderandyli.dynamic.thread.pool.monitor.metrics.storage.MetricsStorage;
-import com.coderandyli.dynamic.thread.pool.client.utils.JsonUtil;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;

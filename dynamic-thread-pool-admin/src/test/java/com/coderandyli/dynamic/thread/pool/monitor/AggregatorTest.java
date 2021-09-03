@@ -1,14 +1,12 @@
 package com.coderandyli.dynamic.thread.pool.monitor;
 
-import com.coderandyli.dynamic.thread.pool.client.ThreadTaskInfo;
+import com.coderandyli.dynamic.thread.pool.core.ThreadTaskInfo;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * @Date 2021/9/1 4:20 下午

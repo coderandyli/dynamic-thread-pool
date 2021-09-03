@@ -1,4 +1,4 @@
-package com.coderandyli.dynamic.thread.pool.admin.controller;
+package com.coderandyli.dynamic.thread.pool.demo.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;

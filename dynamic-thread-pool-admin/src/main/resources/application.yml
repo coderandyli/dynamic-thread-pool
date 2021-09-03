@@ -1,3 +1,6 @@
+server:
+  port: 7701
+
 spring:
   rabbitmq:
     host: 192.168.30.166

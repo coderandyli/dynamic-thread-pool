@@ -23,6 +23,10 @@ public class StatInfo {
      */
     private int activeCount;
     /**
+     * 核心线程数
+     */
+    private int corePoolSize;
+    /**
      * 最大线程数
      */
     private int maximumPoolSize;

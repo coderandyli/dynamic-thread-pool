@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "com.coderandyli.dynamic.thread.pool.client",
+        "com.coderandyli.dynamic.thread.pool.core",
         "com.coderandyli.dynamic.thread.pool.monitor",
         "com.coderandyli.dynamic.thread.pool.admin",
 })

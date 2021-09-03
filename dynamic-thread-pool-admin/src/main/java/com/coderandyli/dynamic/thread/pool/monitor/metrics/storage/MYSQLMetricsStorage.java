@@ -5,8 +5,8 @@ import com.coderandyli.dynamic.thread.pool.admin.entity.ThreadPoolDynamicInfoRec
 import com.coderandyli.dynamic.thread.pool.admin.entity.ThreadTaskExecRecord;
 import com.coderandyli.dynamic.thread.pool.admin.service.ThreadPoolDynamicInfoRecordService;
 import com.coderandyli.dynamic.thread.pool.admin.service.ThreadTaskExecRecordService;
-import com.coderandyli.dynamic.thread.pool.client.ThreadPoolDynamicInfo;
-import com.coderandyli.dynamic.thread.pool.client.ThreadTaskInfo;
+import com.coderandyli.dynamic.thread.pool.core.ThreadPoolDynamicInfo;
+import com.coderandyli.dynamic.thread.pool.core.ThreadTaskInfo;
 import com.coderandyli.dynamic.thread.pool.monitor.convert.ThreadPoolDynamicInfoCovert;
 import com.coderandyli.dynamic.thread.pool.monitor.convert.ThreadTaskInfoCovert;
 import org.springframework.beans.factory.annotation.Autowired;
