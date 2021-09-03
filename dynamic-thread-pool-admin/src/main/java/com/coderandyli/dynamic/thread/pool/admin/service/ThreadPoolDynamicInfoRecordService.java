@@ -10,6 +10,6 @@ import com.coderandyli.dynamic.thread.pool.admin.entity.ThreadPoolDynamicInfoRec
  * 2021-08-31 15:36:22
  */
 public interface ThreadPoolDynamicInfoRecordService extends IService<ThreadPoolDynamicInfoRecord> {
-
+    ThreadPoolDynamicInfoRecord queryLastOneByTpId(String tpId);
 }
 

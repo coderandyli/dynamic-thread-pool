@@ -20,10 +20,10 @@ public class Aggregator {
     public Map<String, TaskStat> aggregate(Map<String, List<ThreadTaskInfo>> requestInfos, long durationInMillis) {
         Map<String, TaskStat> taskStats = new HashMap<>();
         for (Map.Entry<String, List<ThreadTaskInfo>> entry : requestInfos.entrySet()) {
-            String apiName = entry.getKey();
+            String tpId = entry.getKey();
             List<ThreadTaskInfo> requestInfosPerApi = entry.getValue();
             TaskStat taskStat = doAggregate(requestInfosPerApi, durationInMillis);
-            taskStats.put(apiName, taskStat);
+            taskStats.put(tpId, taskStat);
         }
         return taskStats;
     }

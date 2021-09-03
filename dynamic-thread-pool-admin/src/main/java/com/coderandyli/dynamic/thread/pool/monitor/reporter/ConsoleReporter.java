@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class ConsoleReporter extends ScheduleReporter {
-    private ScheduledExecutorService executor;
+    private final ScheduledExecutorService executor;
 
     public ConsoleReporter() {
         System.out.println("ConsoleReporter init...");

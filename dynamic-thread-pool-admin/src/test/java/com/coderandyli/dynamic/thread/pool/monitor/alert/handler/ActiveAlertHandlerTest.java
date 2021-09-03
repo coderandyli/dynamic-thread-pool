@@ -8,12 +8,13 @@ import com.coderandyli.dynamic.thread.pool.monitor.alert.sender.MsgSender;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 /**
- * @Date 2021/8/26 4:00 下午
+ * @Date 2021/9/2 1:41 下午
  * @Created by lizhenzhen
  */
 public class ActiveAlertHandlerTest {
-
     private ActiveAlertHandler activeAlertHandler;
 
     @Before
@@ -41,4 +42,5 @@ public class ActiveAlertHandlerTest {
                 .build();
         activeAlertHandler.check(statInfo2);
     }
+
 }

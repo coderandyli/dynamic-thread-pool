@@ -50,9 +50,29 @@ public class StatInfo {
      * 当前队列剩余容量
      */
     private int queueRemainingCapacity;
-
+    /**
+     * 最大执行时间
+     */
+    private Double maxExecuteTime;
+    /**
+     * 平均响应时间
+     */
+    private Double avgExecuteTime;
+    /**
+     * 99%响应时间
+     */
+    private Double p99ExecuteTime;
+    /**
+     * 99.9%响应时间
+     */
+    private Double p999ExecuteTime;
+    /**
+     * tps
+     */
+    private int tps;
     /**
      * 间隔时间(秒)
      */
     private long durationInSeconds;
+
 }

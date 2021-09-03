@@ -1,4 +1,4 @@
-package com.coderandyli.dynamic.thread.pool.monitor.storage;
+package com.coderandyli.dynamic.thread.pool.monitor.metrics.storage;
 
 import com.coderandyli.dynamic.thread.pool.client.ThreadPoolDynamicInfo;
 import com.coderandyli.dynamic.thread.pool.client.ThreadTaskInfo;
@@ -35,14 +35,26 @@ public class LocalMemoryMetricsStorage implements MetricsStorage {
     }
 
     @Override
-    public List<ThreadTaskInfo> queryTaskInfosByDuration(String taskName, long startTime, long endTime) {
+    public List<ThreadTaskInfo> queryTaskInfosByDuration(String tpId, long startTime, long endTime) {
 
         Map<String, List<ThreadTaskInfo>> resultMap = queryAllTaskInfosByDuration(startTime, endTime);
         if (resultMap == null) return Collections.emptyList();
 
-        List<ThreadTaskInfo> taskInfos = resultMap.get(taskName);
+        List<ThreadTaskInfo> taskInfos = resultMap.get(tpId);
         if (CollectionUtils.isEmpty(taskInfos)) return Collections.emptyList();
         return taskInfos;
+    }
+
+    @Override
+    public ThreadPoolDynamicInfo queryLastThreadPoolInfoByTpId(String tpId) {
+        if (CollectionUtils.isEmpty(threadPoolInfos)) return null;
+        return threadPoolInfos.get(threadPoolInfos.size() - 1);
+    }
+
+    @Deprecated
+    @Override
+    public List<ThreadPoolDynamicInfo> queryAllThreadPoolInfo() {
+        return threadPoolInfos;
     }
 
     @Override
@@ -59,14 +71,4 @@ public class LocalMemoryMetricsStorage implements MetricsStorage {
         return resultMap;
     }
 
-    @Override
-    public ThreadPoolDynamicInfo queryLastThreadPoolInfo() {
-        if (CollectionUtils.isEmpty(threadPoolInfos)) return null;
-        return threadPoolInfos.get(threadPoolInfos.size() - 1);
-    }
-
-    @Override
-    public List<ThreadPoolDynamicInfo> queryAllThreadPoolInfo() {
-        return threadPoolInfos;
-    }
 }

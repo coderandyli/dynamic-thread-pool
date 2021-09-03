@@ -15,7 +15,7 @@ public class Alert {
     /**
      * 警告处理器集合
      */
-    private List<AlertHandler> alertHandlers = new ArrayList<>();
+    private final List<AlertHandler> alertHandlers = new ArrayList<>();
 
     public void addAlertHandler(AlertHandler handler) {
         alertHandlers.add(handler);
@@ -26,6 +26,4 @@ public class Alert {
             handler.check(statInfo);
         }
     }
-
-
 }

@@ -17,7 +17,7 @@ public class ThreadTaskInfo {
     /**
      * 线程池唯一识别号
      */
-    private String threadPoolUniqueId;
+    private String tpId;
     /**
      * 任务名称
      */

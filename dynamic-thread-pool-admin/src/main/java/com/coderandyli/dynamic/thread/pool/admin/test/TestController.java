@@ -1,10 +1,8 @@
 package com.coderandyli.dynamic.thread.pool.admin.test;
 
 import com.coderandyli.dynamic.thread.pool.admin.service.ThreadTaskExecRecordService;
-import com.coderandyli.dynamic.thread.pool.client.ThreadPoolDynamicInfo;
-import com.coderandyli.dynamic.thread.pool.client.ThreadTaskInfo;
+import com.coderandyli.dynamic.thread.pool.monitor.metrics.storage.MetricsStorage;
 import com.coderandyli.dynamic.thread.pool.monitor.reporter.ConsoleReporter;
-import com.coderandyli.dynamic.thread.pool.monitor.storage.MetricsStorage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -40,22 +35,15 @@ public class TestController {
     @Autowired
     private ThreadTaskExecRecordService taskExecRecordService;
 
-
     @GetMapping("/exec-async-task")
     public void asyncTask() {
-        log.info("exec async task, the current is 【{}】", Thread.currentThread().getName());
+        log.debug("exec async task, the current is 【{}】", Thread.currentThread().getName());
         orderThreadPool.execute(new OrderBiz());
     }
 
     @GetMapping("/task-info/query")
     public void queryTaskInfo() {
-        // 获取线程任务原始数据
-        Map<String, List<ThreadTaskInfo>> resultMap = metricsStorage.queryAllTaskInfosByDuration(0, 0);
-        log.info("线程任务执行数据: 一共执行了【{}】, 分别为【{}】", resultMap.toString());
-        List<ThreadPoolDynamicInfo> threadPoolDynamicInfos = metricsStorage.queryAllThreadPoolInfo();
-        log.info("线程池基本信息: 一共记录了【{}】条数据，分别为【{}】",threadPoolDynamicInfos.size(), Arrays.toString(threadPoolDynamicInfos.toArray()));
-
-        // 每30秒查询60秒内的任务执行记录
-        consoleReporter.startRepeatedReport(30, 60);
+        // 每10秒查询60秒内的任务执行记录
+        consoleReporter.startRepeatedReport(10, 60);
     }
 }

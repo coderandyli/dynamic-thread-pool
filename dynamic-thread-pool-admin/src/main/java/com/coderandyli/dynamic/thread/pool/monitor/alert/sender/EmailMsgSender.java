@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Slf4j
 public class EmailMsgSender implements MsgSender {
-    private List<String> emails;
+    private final List<String> emails;
 
     public EmailMsgSender(List<String> emails) {
         this.emails = emails;

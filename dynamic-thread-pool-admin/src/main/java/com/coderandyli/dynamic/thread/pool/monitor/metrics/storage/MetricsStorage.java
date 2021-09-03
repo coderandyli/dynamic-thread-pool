@@ -1,4 +1,4 @@
-package com.coderandyli.dynamic.thread.pool.monitor.storage;
+package com.coderandyli.dynamic.thread.pool.monitor.metrics.storage;
 
 import com.coderandyli.dynamic.thread.pool.client.ThreadPoolDynamicInfo;
 import com.coderandyli.dynamic.thread.pool.client.ThreadTaskInfo;
@@ -27,12 +27,19 @@ public interface MetricsStorage {
     /**
      * 获取指定时间区间内的【taskName】信息列表
      * 『提示』：时间区间过大，可能造成OOM或者频繁Full GC
-     * @param taskName
+     * @param tpId
      * @param startTime
      * @param endTime
      * @return
      */
-    List<ThreadTaskInfo> queryTaskInfosByDuration(String taskName, long startTime, long endTime);
+    List<ThreadTaskInfo> queryTaskInfosByDuration(String tpId, long startTime, long endTime);
+
+    /**
+     * 获取线程池最新信息
+     * @param tpId
+     * @return
+     */
+    ThreadPoolDynamicInfo queryLastThreadPoolInfoByTpId(String tpId);
     /**
      * 获取指定时间区间内的所有的所有请求
      * 『提示』：时间区间过大，可能造成OOM或者频繁Full GC
@@ -43,12 +50,8 @@ public interface MetricsStorage {
     Map<String, List<ThreadTaskInfo>> queryAllTaskInfosByDuration(long startTime, long endTime);
 
     /**
-     * 获取线程池最新信息
-     */
-    ThreadPoolDynamicInfo queryLastThreadPoolInfo();
-
-    /**
      * 获取所有线程池最新信息
      */
+    @Deprecated
     List<ThreadPoolDynamicInfo> queryAllThreadPoolInfo();
 }

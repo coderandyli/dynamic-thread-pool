@@ -80,7 +80,7 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
         saveThreadPoolInfo();
 
         // 记录线程任务数据
-        taskInfo.setThreadPoolUniqueId(this.getUniqueId());
+        taskInfo.setTpId(id);
         taskInfo.setTaskName(t.getName());
         taskInfo.setTimestamp(System.currentTimeMillis());
         super.beforeExecute(t, r);
@@ -153,7 +153,7 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
         public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
             if (executor instanceof DynamicThreadPoolExecutor) {
                 DynamicThreadPoolExecutor dynamicThreadPoolExecutor = (DynamicThreadPoolExecutor) executor;
-                ThreadPoolRejectMetricManager.increment(dynamicThreadPoolExecutor.getUniqueId());
+                ThreadPoolRejectMetricManager.increment(dynamicThreadPoolExecutor.getId());
             }
             defaultRejectHandler.rejectedExecution(r, executor);
         }
@@ -172,7 +172,6 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
      *
      * please use {@link #getId()}
      */
-    @Deprecated
     public String getUniqueId() {
         return this.applicationName + ":" +
                 this.poolName;
@@ -192,8 +191,9 @@ public class DynamicThreadPoolExecutor extends ThreadPoolExecutor {
         ThreadPoolDynamicInfo threadPoolInfo = new ThreadPoolDynamicInfo();
         BeanUtils.copyProperties(this, threadPoolInfo);
         threadPoolInfo.setType(1);
+        threadPoolInfo.setTpId(id);
         threadPoolInfo.setRejectCount(
-                ThreadPoolRejectMetricManager.get(this.getUniqueId())
+                ThreadPoolRejectMetricManager.get(id)
         );
         this.metricsCollector.recordThreadPoolInfo(threadPoolInfo);
     }

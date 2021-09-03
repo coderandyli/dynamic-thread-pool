@@ -32,7 +32,7 @@ public class ThreadPoolDynamicInfo {
     /**
      * 线程池唯一识别号
      */
-    private String uniqueId;
+    private String tpId;
     /**
      * 活跃线程数（workers中工作线程数）
      */

@@ -12,7 +12,7 @@ public class OrderBiz implements Runnable{
     public void run() {
         log.info("执行order异步任务, the thread name is 【{}】", Thread.currentThread().getName());
         try {
-            Thread.sleep(1000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
