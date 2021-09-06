@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.Executors;
 
 /**
- * 提供API, 采集接口请求的原始数据
+ * 提供API - 采集线程池元数据及任务执行数据
  * <p>
  * 为防止一次性加载太多数据到内存，导致内存吃紧，甚至内存溢出
  * 采用 Google Guava EventBus 生产者-消费者模型，将采集的数据先放入内存共享队列中，另一个线程读取共享队列中的数据，写入到外部存储中，
@@ -24,7 +24,6 @@ import java.util.concurrent.Executors;
  * @author lizhen
  * @version 1.0
  * @date 2020/1/3 上午9:48
- * <p>
  */
 @Component("metricsCollector")
 public class MetricsCollector {

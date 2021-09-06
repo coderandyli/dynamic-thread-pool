@@ -15,7 +15,7 @@ dynamic-thread-pool:
   application_name: dynamic-thread-pool-demo
   admin:
     base_url: http://192.168.30.12:7701
-
+    period: 10
 
 logging:
   level:

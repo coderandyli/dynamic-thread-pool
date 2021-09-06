@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 线程池管理器
+ * -DCL, 全局唯一
  *
  * @Date 2021/8/18 4:03 下午
  * @Created by lizhenzhen
@@ -31,7 +32,7 @@ public class ThreadPoolManager {
      * @param threadPoolId 线程池Id
      * @return
      */
-    public ExecutorService getExecutorService(String threadPoolId) {
+    private ExecutorService getExecutorService(String threadPoolId) {
         if (!executorServiceMap.containsKey(threadPoolId)) {
             return null;
         }
@@ -55,9 +56,10 @@ public class ThreadPoolManager {
      *
      * @param config 线程池配置信息
      */
-    public void changed(ModifyThreadPool config) {
+    public synchronized void changed(ModifyThreadPool config) {
         String tpId = config.getTpId();
-        ExecutorService executorService = executorServiceMap.get(tpId);
+        ExecutorService executorService = getExecutorService(tpId);
+        if (executorService == null) return;
         if (!(executorService instanceof ThreadPoolExecutor)) {
             return;
         }
@@ -73,7 +75,6 @@ public class ThreadPoolManager {
         log.info("The thread pool configuration is modified successfull， the arg is【{}】", config);
     }
 
-
     public static ThreadPoolManager getInstance() {
         if (instance == null) {
             synchronized (ThreadPoolManager.class) {
@@ -85,7 +86,7 @@ public class ThreadPoolManager {
         return instance;
     }
 
-    public Map<String, ExecutorService> getExecutorServiceMap() {
+    private Map<String, ExecutorService> getExecutorServiceMap() {
         return executorServiceMap;
     }
 }

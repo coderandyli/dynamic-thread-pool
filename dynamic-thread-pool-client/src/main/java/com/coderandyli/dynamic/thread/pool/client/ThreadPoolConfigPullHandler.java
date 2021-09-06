@@ -8,7 +8,6 @@ import com.coderandyli.dynamic.thread.pool.core.ModifyThreadPool;
 import com.coderandyli.dynamic.thread.pool.core.metrics.ThreadPoolManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -26,22 +25,19 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Component
-public class ThreadPoolHandler {
+public class ThreadPoolConfigPullHandler {
+
     private final ScheduledExecutorService executor;
 
     @Autowired
     private ThreadPoolConfigProperties configProperties;
-
-    @Autowired
-    private Environment environment;
-
 
     /**
      * 是否暂定
      */
     private boolean isPause = false;
 
-    public ThreadPoolHandler() {
+    public ThreadPoolConfigPullHandler() {
         this.executor = Executors.newSingleThreadScheduledExecutor();
     }
 
@@ -55,6 +51,7 @@ public class ThreadPoolHandler {
      * 执行定时任务
      */
     public void execSingleThreadScheduledExecutor() {
+        long period = configProperties.getAdmin().getPeriod();
         executor.scheduleAtFixedRate(() -> {
             if (!isPause) {
                 if (log.isDebugEnabled()) {
@@ -62,7 +59,7 @@ public class ThreadPoolHandler {
                 }
                 startPullPoolConfig();
             }
-        }, 0l, 10, TimeUnit.SECONDS);
+        }, 0l, period, TimeUnit.SECONDS);
     }
 
     /**
