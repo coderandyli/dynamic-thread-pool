@@ -10,6 +10,13 @@ spring:
     username: guest
     password: guest
 
+# 动态
+dynamic-thread-pool:
+  application_name: dynamic-thread-pool-demo
+  admin:
+    base_url: http://192.168.30.12:7701
+
+
 logging:
   level:
     root: info

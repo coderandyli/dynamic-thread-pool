@@ -10,6 +10,8 @@ import lombok.ToString;
 @Data
 @ToString
 public class ModifyThreadPool {
+
+    private Long id;
     /**
      * 应用名称
      */

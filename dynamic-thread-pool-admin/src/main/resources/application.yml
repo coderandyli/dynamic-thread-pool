@@ -2,6 +2,8 @@ server:
   port: 7701
 
 spring:
+  application:
+    name: dynamic-thread-pool-admin
   rabbitmq:
     host: 192.168.30.166
     port: 5672

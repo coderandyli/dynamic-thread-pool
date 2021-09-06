@@ -37,7 +37,7 @@ public class BizThreadPoolConfig {
 
         // 模拟任务拒绝
         DynamicThreadPoolExecutor dynamicThreadPoolExecutor = new DynamicThreadPoolExecutor(
-                "test-app",
+                "dynamic-thread-pool-demo",
                 "biz-order",
                 2,
                 4,
