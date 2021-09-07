@@ -9,10 +9,17 @@ import lombok.Data;
 @Data
 public class AdminProperties {
     /**
+     * admin 基础路径
+     */
+    private String baseUrl;
+    /**
      * 默认端口为7701
      */
-    private String port;
-    private String baseUrl;
+    private int port = 7701;
+    /**
+     * 是否暂停拉取配置，默认为false
+     */
+    private boolean pausePull = false;
     /**
      * 线程池配置拉取周期（即：线程池配置更新频率）
      * 默认为10s

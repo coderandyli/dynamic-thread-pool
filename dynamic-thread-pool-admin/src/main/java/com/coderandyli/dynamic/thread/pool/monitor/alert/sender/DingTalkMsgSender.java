@@ -1,6 +1,7 @@
 package com.coderandyli.dynamic.thread.pool.monitor.alert.sender;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
  * send msg to DingTalk
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * @Created by lizhenzhen
  */
 @Slf4j
+@Component
 public class DingTalkMsgSender implements MsgSender {
     @Override
     public void send(String msg) {

@@ -6,7 +6,7 @@ import com.coderandyli.dynamic.thread.pool.admin.entity.ThreadPoolConfiguration;
 import com.coderandyli.dynamic.thread.pool.admin.mapper.ThreadPoolConfigurationMapper;
 import com.coderandyli.dynamic.thread.pool.admin.service.ThreadPoolConfigurationService;
 import com.coderandyli.dynamic.thread.pool.core.ModifyThreadPool;
-import com.coderandyli.dynamic.thread.pool.monitor.convert.ThreadPoolConfigurationCovert;
+import com.coderandyli.dynamic.thread.pool.admin.convert.ThreadPoolConfigurationCovert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

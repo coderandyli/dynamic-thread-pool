@@ -1,4 +1,5 @@
 package com.coderandyli.dynamic.thread.pool.monitor.reporter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -8,12 +9,15 @@ import java.util.concurrent.TimeUnit;
  * @Date 2021/8/23 11:48 上午
  * @Created by lizhenzhen
  */
+@Slf4j
 @Component
 public class ConsoleReporter extends ScheduleReporter {
     private final ScheduledExecutorService executor;
 
     public ConsoleReporter() {
-        System.out.println("ConsoleReporter init...");
+        if (log.isDebugEnabled()) {
+            log.debug("ConsoleReporter init...");
+        }
          this.executor = Executors.newSingleThreadScheduledExecutor();
     }
 

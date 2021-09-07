@@ -7,8 +7,8 @@ import com.coderandyli.dynamic.thread.pool.admin.service.ThreadPoolDynamicInfoRe
 import com.coderandyli.dynamic.thread.pool.admin.service.ThreadTaskExecRecordService;
 import com.coderandyli.dynamic.thread.pool.core.ThreadPoolDynamicInfo;
 import com.coderandyli.dynamic.thread.pool.core.ThreadTaskInfo;
-import com.coderandyli.dynamic.thread.pool.monitor.convert.ThreadPoolDynamicInfoCovert;
-import com.coderandyli.dynamic.thread.pool.monitor.convert.ThreadTaskInfoCovert;
+import com.coderandyli.dynamic.thread.pool.admin.convert.ThreadPoolDynamicInfoCovert;
+import com.coderandyli.dynamic.thread.pool.admin.convert.ThreadTaskInfoCovert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
@@ -66,12 +66,6 @@ public class MYSQLMetricsStorage implements MetricsStorage {
         return ThreadPoolDynamicInfoCovert.threadPoolDynamicInfoRecordToThreadPoolDynamicInfo(record);
     }
 
-    @Deprecated
-    @Override
-    public List<ThreadPoolDynamicInfo> queryAllThreadPoolInfo() {
-        return null;
-    }
-
     @Override
     public Map<String, List<ThreadTaskInfo>> queryAllTaskInfosByDuration(long startTime, long endTime) {
         List<ThreadTaskInfo> taskInfos = this.queryTaskInfosByDuration(null, startTime, endTime);
@@ -83,5 +77,11 @@ public class MYSQLMetricsStorage implements MetricsStorage {
             taskInfoSubList.add(taskInfo);
         }
         return resultMap;
+    }
+
+    @Deprecated
+    @Override
+    public List<ThreadPoolDynamicInfo> queryAllThreadPoolInfo() {
+        return null;
     }
 }

@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 @Slf4j
 public class ActiveAlertHandler extends AlertHandler {
 
+
     public ActiveAlertHandler(Notification notification, AlertRule alertRule) {
         super(notification, alertRule);
     }

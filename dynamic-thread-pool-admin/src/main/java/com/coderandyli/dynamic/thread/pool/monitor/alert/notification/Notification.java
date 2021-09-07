@@ -1,6 +1,7 @@
 package com.coderandyli.dynamic.thread.pool.monitor.alert.notification;
 
 import com.coderandyli.dynamic.thread.pool.monitor.alert.sender.MsgSender;
+import org.springframework.stereotype.Component;
 
 /**
  * 通知类
@@ -8,6 +9,7 @@ import com.coderandyli.dynamic.thread.pool.monitor.alert.sender.MsgSender;
  * @Date 2021/8/26 2:26 下午
  * @Created by lizhenzhen
  */
+@Component
 public abstract class Notification {
 
     protected MsgSender msgSender;

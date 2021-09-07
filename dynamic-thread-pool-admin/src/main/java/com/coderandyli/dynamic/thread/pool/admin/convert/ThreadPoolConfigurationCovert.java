@@ -1,4 +1,4 @@
-package com.coderandyli.dynamic.thread.pool.monitor.convert;
+package com.coderandyli.dynamic.thread.pool.admin.convert;
 
 import com.coderandyli.dynamic.thread.pool.admin.entity.ThreadPoolConfiguration;
 import com.coderandyli.dynamic.thread.pool.core.ModifyThreadPool;

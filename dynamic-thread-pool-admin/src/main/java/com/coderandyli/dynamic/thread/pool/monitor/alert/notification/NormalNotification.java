@@ -9,6 +9,7 @@ import com.coderandyli.dynamic.thread.pool.monitor.alert.sender.MsgSender;
  * @Created by lizhenzhen
  */
 public class NormalNotification extends Notification{
+
     public NormalNotification(MsgSender msgSender) {
         super(msgSender);
     }

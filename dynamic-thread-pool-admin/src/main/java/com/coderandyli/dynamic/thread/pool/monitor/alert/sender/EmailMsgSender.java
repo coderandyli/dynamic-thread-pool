@@ -1,6 +1,7 @@
 package com.coderandyli.dynamic.thread.pool.monitor.alert.sender;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * @Created by lizhenzhen
  */
 @Slf4j
+@Component
 public class EmailMsgSender implements MsgSender {
     private final List<String> emails;
 

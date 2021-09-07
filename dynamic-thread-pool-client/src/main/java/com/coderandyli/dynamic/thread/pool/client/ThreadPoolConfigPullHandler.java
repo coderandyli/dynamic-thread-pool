@@ -2,7 +2,7 @@ package com.coderandyli.dynamic.thread.pool.client;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.coderandyli.dynamic.thread.pool.client.config.ThreadPoolConfigProperties;
+import com.coderandyli.dynamic.thread.pool.client.properties.ThreadPoolConfigProperties;
 import com.coderandyli.dynamic.thread.pool.client.utils.OkHttpUtils;
 import com.coderandyli.dynamic.thread.pool.core.ModifyThreadPool;
 import com.coderandyli.dynamic.thread.pool.core.metrics.ThreadPoolManager;
@@ -14,12 +14,15 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 定时拉取线程池配置信息
+ *
  * @Date 2021/9/3 3:17 下午
  * @Created by lizhenzhen
  */
@@ -31,11 +34,6 @@ public class ThreadPoolConfigPullHandler {
 
     @Autowired
     private ThreadPoolConfigProperties configProperties;
-
-    /**
-     * 是否暂定
-     */
-    private boolean isPause = false;
 
     public ThreadPoolConfigPullHandler() {
         this.executor = Executors.newSingleThreadScheduledExecutor();
@@ -52,6 +50,10 @@ public class ThreadPoolConfigPullHandler {
      */
     public void execSingleThreadScheduledExecutor() {
         long period = configProperties.getAdmin().getPeriod();
+        boolean isPause = configProperties.getAdmin().isPausePull();
+        if (log.isDebugEnabled()) {
+            log.debug("Reading configuration information from yml, the dtp.admin.period is 【{}】, dtp.admin.pausePull is 【{}】", period, isPause);
+        }
         executor.scheduleAtFixedRate(() -> {
             if (!isPause) {
                 if (log.isDebugEnabled()) {
@@ -67,8 +69,8 @@ public class ThreadPoolConfigPullHandler {
      *
      * @return
      */
-    private String startPullPoolConfig() {
-        String applicationName = configProperties.getApplicationName();
+    private void startPullPoolConfig() {
+        String applicationName = configProperties.getApplication();
         String adminBaseUrl = configProperties.getAdmin().getBaseUrl();
 
         String url = adminBaseUrl + "/admin/" + applicationName + "/thread-pool/config/query";
@@ -77,9 +79,19 @@ public class ThreadPoolConfigPullHandler {
         }
         try {
             String result = OkHttpUtils.get(url);
-            if (result == null) return null;
+            if (result == null) return;
 
             List<ModifyThreadPool> configs = JSONObject.parseArray(result, ModifyThreadPool.class);
+            if (CollectionUtils.isEmpty(configs)) {
+                if (log.isDebugEnabled()) {
+                    log.debug("the pool configuration was not pulled. the applicaiton is 【{}】", applicationName);
+                }
+                return;
+            }
+            if (log.isDebugEnabled()) {
+                log.debug("the pool configuration pull successful. the result is 【{}】", Arrays.toString(configs.toArray()));
+            }
+
             List<String> executedtpIds = new ArrayList<>();
             for (ModifyThreadPool modifyThreadPool : configs) {
                 ThreadPoolManager.getInstance().changed(modifyThreadPool);
@@ -90,7 +102,7 @@ public class ThreadPoolConfigPullHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return;
     }
 
     /**
@@ -105,8 +117,8 @@ public class ThreadPoolConfigPullHandler {
         try {
             String reuslt = OkHttpUtils.post(url, JSON.toJSONString(executedtpIds));
             if (log.isDebugEnabled()) {
+                log.debug("The request result is 【{}】", reuslt);
             }
-            log.debug("The request result is 【{}】", reuslt);
         } catch (IOException e) {
             e.printStackTrace();
         }
