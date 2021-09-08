@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: dtp-demo
+  rabbitmq:
+    host: 192.168.30.166
+    port: 5672
+    username: guest
+    password: guest
+
+# 动态线程池配置
+dtp:
+  application: dtp-demo
+  admin:
+    # admin 请求基础路径
+    base_url: http://192.168.30.12:7701
+    # 是否暂停拉取
+    pause_pull: false
+    # 拉取频率
+    period: 20
+
+logging:
+  level:
+    root: info
+    com.coderandyli: debug
