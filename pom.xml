@@ -10,10 +10,10 @@
     <version>1.0.1-SNAPSHOT</version>
 
     <modules>
-        <module>dtp-client</module>
         <module>dtp-admin</module>
-        <module>dtp-demo</module>
         <module>dtp-core</module>
+        <module>dtp-client</module>
+        <module>dtp-demo</module>
     </modules>
 
     <properties>

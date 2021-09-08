@@ -7,15 +7,15 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "com.coderandyli.dynamic.thread.pool.core",
-        "com.coderandyli.dynamic.thread.pool.monitor",
-        "com.coderandyli.dynamic.thread.pool.admin",
+        "com.coderandyli.dtp.core",
+        "com.coderandyli.dtp.monitor",
+        "com.coderandyli.dtp.admin"
 })
-@MapperScan({"com.coderandyli.dynamic.thread.pool.admin.mapper"})
-public class AdminApplication {
+@MapperScan({"com.coderandyli.dtp.admin.mapper"})
+public class DtpAdminApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AdminApplication.class, args);
+        SpringApplication.run(DtpAdminApplication.class, args);
     }
 
 }
