@@ -1,6 +1,7 @@
 package com.coderandyli.dynamic.thread.pool.monitor.alert.notification;
 
 import com.coderandyli.dynamic.thread.pool.monitor.alert.sender.MsgSender;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +15,7 @@ public abstract class Notification {
 
     protected MsgSender msgSender;
 
+    @Autowired
     public Notification(MsgSender msgSender) {
         this.msgSender = msgSender;
     }

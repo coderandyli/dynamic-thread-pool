@@ -3,11 +3,7 @@ package com.coderandyli.dynamic.thread.pool.monitor.alert;
 import com.coderandyli.dynamic.thread.pool.core.ThreadPoolDynamicInfo;
 import com.coderandyli.dynamic.thread.pool.monitor.TaskStat;
 import com.coderandyli.dynamic.thread.pool.monitor.alert.handler.ActiveAlertHandler;
-import com.coderandyli.dynamic.thread.pool.monitor.alert.handler.AlertHandler;
 import com.coderandyli.dynamic.thread.pool.monitor.alert.handler.TaskRejectAlertHandler;
-import com.coderandyli.dynamic.thread.pool.monitor.alert.notification.NormalNotification;
-import com.coderandyli.dynamic.thread.pool.monitor.alert.sender.ConsoleMsgSender;
-import com.coderandyli.dynamic.thread.pool.monitor.alert.sender.MsgSender;
 import com.coderandyli.dynamic.thread.pool.monitor.metrics.storage.MetricsStorage;
 import com.coderandyli.dynamic.thread.pool.monitor.reporter.ScheduleReporter;
 import org.springframework.beans.factory.InitializingBean;
@@ -22,6 +18,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Alert 逻辑开始执行
+ *
  * @Date 2021/9/2 2:44 下午
  * @Created by lizhenzhen
  */
@@ -30,26 +28,26 @@ public class AlertContext implements InitializingBean {
     private final ScheduledExecutorService executor;
     private final Alert alert;
     private final ScheduleReporter scheduleReporter;
-    protected final MetricsStorage metricsStorage;
+    private final MetricsStorage metricsStorage;
+    private final ActiveAlertHandler activeAlertHandler;
+    private final TaskRejectAlertHandler taskRejectAlertHandler;
 
     @Autowired
-    public AlertContext(ScheduleReporter scheduleReporter, @Qualifier("mysqlMetricsStorage") MetricsStorage metricsStorage) {
+    public AlertContext(ScheduleReporter scheduleReporter,
+                        @Qualifier("mysqlMetricsStorage") MetricsStorage metricsStorage,
+                        Alert alert,
+                        ActiveAlertHandler activeAlertHandler,
+                        TaskRejectAlertHandler taskRejectAlertHandler) {
         this.executor = Executors.newSingleThreadScheduledExecutor();
         this.scheduleReporter = scheduleReporter;
         this.metricsStorage = metricsStorage;
+        this.alert = alert;
+        this.activeAlertHandler = activeAlertHandler;
+        this.taskRejectAlertHandler = taskRejectAlertHandler;
 
-        // TODO: 2021/9/2 预警相关配置暂时先放这里，暂未想好预警消息触发逻辑。
-        MsgSender msgSender = new ConsoleMsgSender();
-        NormalNotification normalNotification = new NormalNotification(msgSender);
-        AlertRule alertRule = new AlertRule();
-        AlertHandler activeAlertHandler = new ActiveAlertHandler(normalNotification, alertRule);
-        AlertHandler taskRejectAlertHandler = new TaskRejectAlertHandler(normalNotification, alertRule);
-
-        alert = new Alert();
-        alert.addAlertHandler(activeAlertHandler);
-        alert.addAlertHandler(taskRejectAlertHandler);
+        this.alert.addAlertHandler(this.activeAlertHandler);
+        this.alert.addAlertHandler(this.taskRejectAlertHandler);
     }
-
 
     @Override
     public void afterPropertiesSet() throws Exception {

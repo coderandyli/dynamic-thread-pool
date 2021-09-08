@@ -1,8 +1,8 @@
 package com.coderandyli.dynamic.thread.pool.monitor.alert.handler;
 
 import com.coderandyli.dynamic.thread.pool.monitor.alert.AlertRule;
-import com.coderandyli.dynamic.thread.pool.monitor.alert.notification.Notification;
 import com.coderandyli.dynamic.thread.pool.monitor.alert.StatInfo;
+import com.coderandyli.dynamic.thread.pool.monitor.alert.notification.Notification;
 
 /**
  * 警告处理器
@@ -20,9 +20,9 @@ public abstract class AlertHandler {
      */
     protected AlertRule alertRule;
 
-    public AlertHandler(Notification notification, AlertRule alertRule) {
+    public AlertHandler(Notification notification) {
         this.notification = notification;
-        this.alertRule = alertRule;
+        this.alertRule = new AlertRule();
     }
 
     public abstract void check(StatInfo statInfo);

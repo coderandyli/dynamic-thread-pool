@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component;
  * @Created by lizhenzhen
  */
 @Slf4j
-@Component
+@Component("dingTalkMsgSender")
 public class DingTalkMsgSender implements MsgSender {
+
     @Override
     public void send(String msg) {
         log.debug("send msg to DingTalk, the msg is 【{}】", msg);

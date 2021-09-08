@@ -1,15 +1,22 @@
 package com.coderandyli.dynamic.thread.pool.monitor.alert.notification;
 
 import com.coderandyli.dynamic.thread.pool.monitor.alert.sender.MsgSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 /**
  * 【严重】通知
+ *  - send dingTalk
  *
  * @Date 2021/8/26 3:36 下午
  * @Created by lizhenzhen
  */
+@Component("severeNotification")
 public class SevereNotification extends Notification{
-    public SevereNotification(MsgSender msgSender) {
+
+    @Autowired
+    public SevereNotification(@Qualifier("dingTalkMsgSender") MsgSender msgSender) {
         super(msgSender);
     }
 

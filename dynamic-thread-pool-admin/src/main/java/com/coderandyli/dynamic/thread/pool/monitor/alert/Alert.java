@@ -1,6 +1,7 @@
 package com.coderandyli.dynamic.thread.pool.monitor.alert;
 
 import com.coderandyli.dynamic.thread.pool.monitor.alert.handler.AlertHandler;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * @Date 2021/8/26 1:44 下午
  * @Created by lizhenzhen
  */
+@Component
 public class Alert {
     /**
      * 警告处理器集合

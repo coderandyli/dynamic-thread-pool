@@ -10,12 +10,15 @@ import java.util.List;
  * @Created by lizhenzhen
  */
 @Slf4j
-@Component
+@Component("emailMsgSender")
 public class EmailMsgSender implements MsgSender {
-    private final List<String> emails;
+    private List<String> emails;
 
     public EmailMsgSender(List<String> emails) {
         this.emails = emails;
+    }
+
+    public EmailMsgSender() {
     }
 
     @Override

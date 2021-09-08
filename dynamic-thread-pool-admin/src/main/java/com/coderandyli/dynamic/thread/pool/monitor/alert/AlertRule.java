@@ -25,6 +25,7 @@ public class AlertRule {
 
     /**
      * 最大线程池活跃度
+     *
      * @return
      */
     public double getMaxActive() {

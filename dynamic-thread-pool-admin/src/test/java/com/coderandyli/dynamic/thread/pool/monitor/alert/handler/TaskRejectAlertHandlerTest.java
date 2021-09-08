@@ -8,8 +8,6 @@ import com.coderandyli.dynamic.thread.pool.monitor.alert.sender.MsgSender;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * @Date 2021/9/2 1:41 下午
  * @Created by lizhenzhen
@@ -22,7 +20,7 @@ public class TaskRejectAlertHandlerTest {
         MsgSender msgSender = new ConsoleMsgSender();
         NormalNotification normalNotification = new NormalNotification(msgSender);
         AlertRule alertRule = new AlertRule();
-        taskRejectAlertHandler = new TaskRejectAlertHandler(normalNotification, alertRule);
+        taskRejectAlertHandler = new TaskRejectAlertHandler(normalNotification);
     }
 
     @Test

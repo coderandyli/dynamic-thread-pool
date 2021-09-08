@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Primary
-@Component
+@Component("consoleMsgSender")
 public class ConsoleMsgSender implements MsgSender {
     @Override
     public void send(String msg) {
