@@ -2,16 +2,19 @@ package com.coderandyli.dynamic.thread.pool.monitor.alert;
 
 import com.coderandyli.dynamic.thread.pool.core.ThreadPoolDynamicInfo;
 import com.coderandyli.dynamic.thread.pool.monitor.TaskStat;
-import com.coderandyli.dynamic.thread.pool.monitor.alert.handler.ActiveAlertHandler;
-import com.coderandyli.dynamic.thread.pool.monitor.alert.handler.TaskRejectAlertHandler;
+import com.coderandyli.dynamic.thread.pool.monitor.alert.handler.AlertHandler;
 import com.coderandyli.dynamic.thread.pool.monitor.metrics.storage.MetricsStorage;
 import com.coderandyli.dynamic.thread.pool.monitor.reporter.ScheduleReporter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -23,36 +26,36 @@ import java.util.concurrent.TimeUnit;
  * @Date 2021/9/2 2:44 下午
  * @Created by lizhenzhen
  */
+@Slf4j
 @Component
 public class AlertContext implements InitializingBean {
     private final ScheduledExecutorService executor;
     private final Alert alert;
     private final ScheduleReporter scheduleReporter;
     private final MetricsStorage metricsStorage;
-    private final ActiveAlertHandler activeAlertHandler;
-    private final TaskRejectAlertHandler taskRejectAlertHandler;
+
+    @Autowired
+    ApplicationContext applicationContext;
 
     @Autowired
     public AlertContext(ScheduleReporter scheduleReporter,
                         @Qualifier("mysqlMetricsStorage") MetricsStorage metricsStorage,
-                        Alert alert,
-                        ActiveAlertHandler activeAlertHandler,
-                        TaskRejectAlertHandler taskRejectAlertHandler) {
+                        Alert alert) {
         this.executor = Executors.newSingleThreadScheduledExecutor();
         this.scheduleReporter = scheduleReporter;
         this.metricsStorage = metricsStorage;
         this.alert = alert;
-        this.activeAlertHandler = activeAlertHandler;
-        this.taskRejectAlertHandler = taskRejectAlertHandler;
-
-        this.alert.addAlertHandler(this.activeAlertHandler);
-        this.alert.addAlertHandler(this.taskRejectAlertHandler);
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         // 每10秒查询60秒内的任务执行记录
         startRepeatedAlertCheck(10, 60);
+
+        // add alertHandler
+        Map<String, AlertHandler> alertHandlerMap = applicationContext.getBeansOfType(AlertHandler.class);
+        List<AlertHandler> handlers = new ArrayList(alertHandlerMap.values());
+        handlers.forEach(this.alert::addAlertHandler);
     }
 
     public void startRepeatedAlertCheck(long periodInSeconds, long durationInSeconds) {

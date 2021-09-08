@@ -50,6 +50,7 @@ public class TaskRejectAlertHandler extends AlertHandler {
                     statInfo;
             this.notification.notify(msg);
         } else {
+            this.notification.notify("【线程池活跃度警告处理器】未达到阈值");
             if (log.isDebugEnabled()) {
                 log.debug("【线程池活跃度警告处理器】未达到阈值，参数为：【{}】", statInfo);
             }

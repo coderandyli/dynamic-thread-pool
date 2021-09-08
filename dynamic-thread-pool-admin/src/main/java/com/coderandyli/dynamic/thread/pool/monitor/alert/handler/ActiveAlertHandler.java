@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  * 线程池活跃度 = activeCount / maximumPoolSize
  *
  * <h3> Notification level<h3/>
- *  URGENCY
+ * URGENCY
  *
  * @Date 2021/8/26 2:23 下午
  * @Created by lizhenzhen
@@ -58,6 +58,7 @@ public class ActiveAlertHandler extends AlertHandler {
                     statInfo;
             this.notification.notify(msg);
         } else {
+            this.notification.notify("【线程池活跃度警告处理器】未达到阈值");
             if (log.isDebugEnabled()) {
                 log.debug("【线程池活跃度警告处理器】未达到阈值，参数为：【{}】", statInfo);
             }
