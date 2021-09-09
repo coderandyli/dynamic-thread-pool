@@ -1,4 +1,4 @@
-package com.coderandyli.dtp.demo.test.config;
+package com.coderandyli.dtp.demo.config;
 
 import com.coderandyli.dtp.core.DynamicThreadPoolExecutor;
 import org.springframework.context.annotation.Bean;
@@ -26,25 +26,24 @@ public class BizThreadPoolConfig {
      */
     @Bean(value = "bizOrderThreadPool")
     public ThreadPoolExecutor buildBizOrderQueueThreadPool() {
-//        DynamicThreadPoolExecutor dynamicThreadPoolExecutor = new DynamicThreadPoolExecutor(
-//                "test-app",
-//                "biz-order",
-//                2 * NCPUS,
-//                25 * NCPUS,
-//                20,
-//                TimeUnit.MILLISECONDS,
-//                new SynchronousQueue<>());
-
-        // 模拟任务拒绝
         DynamicThreadPoolExecutor dynamicThreadPoolExecutor = new DynamicThreadPoolExecutor(
                 "dtp-demo",
                 "biz-order",
-                2,
-                4,
+                2 * NCPUS,
+                25 * NCPUS,
                 20,
                 TimeUnit.MILLISECONDS,
                 new SynchronousQueue<>());
 
+//        // 模拟任务拒绝
+//        DynamicThreadPoolExecutor dynamicThreadPoolExecutor = new DynamicThreadPoolExecutor(
+//                "dtp-demo",
+//                "biz-order",
+//                2,
+//                4,
+//                20,
+//                TimeUnit.MILLISECONDS,
+//                new SynchronousQueue<>());
         return dynamicThreadPoolExecutor;
     }
 }

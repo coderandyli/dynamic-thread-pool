@@ -1,4 +1,4 @@
-package com.coderandyli.dtp.client.utils;
+package com.coderandyli.dtp.core.utils;
 
 import okhttp3.*;
 

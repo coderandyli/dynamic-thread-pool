@@ -3,7 +3,7 @@ package com.coderandyli.dtp.client;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.coderandyli.dtp.client.properties.ThreadPoolConfigProperties;
-import com.coderandyli.dtp.client.utils.OkHttpUtils;
+import com.coderandyli.dtp.core.utils.OkHttpUtils;
 import com.coderandyli.dtp.core.metrics.ThreadPoolManager;
 import com.coderandyli.dtp.core.ModifyThreadPool;
 import lombok.extern.slf4j.Slf4j;

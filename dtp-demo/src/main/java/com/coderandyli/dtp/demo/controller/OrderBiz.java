@@ -1,4 +1,4 @@
-package com.coderandyli.dtp.demo.test;
+package com.coderandyli.dtp.demo.controller;
 
 import lombok.extern.slf4j.Slf4j;
 

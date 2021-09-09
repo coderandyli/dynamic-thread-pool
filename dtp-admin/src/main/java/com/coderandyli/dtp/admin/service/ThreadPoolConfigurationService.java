@@ -24,7 +24,7 @@ public interface ThreadPoolConfigurationService extends IService<ThreadPoolConfi
 
     /**
      * 线程池配置标记执行
-     * @param tpId
+     * @param tpIds
      * @return
      */
     Boolean markExecuted(List<String> tpIds);
