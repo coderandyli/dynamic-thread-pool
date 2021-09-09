@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * 2018-09-06 下午3:41
  **/
 @Configuration
-public class RabbitConfig {
+public class DtpRabbitConfig {
     /**
      * EXCHANGE NAME of METRICS
      * 命名方式：{applicatioNname}.{业务名称}

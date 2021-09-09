@@ -3,7 +3,7 @@ package com.coderandyli.dtp.core.metrics;
 import com.coderandyli.dtp.core.DynamicThreadPoolExecutor;
 import com.coderandyli.dtp.core.ThreadPoolDynamicInfo;
 import com.coderandyli.dtp.core.ThreadTaskInfo;
-import com.coderandyli.dtp.core.config.RabbitConfig;
+import com.coderandyli.dtp.core.config.DtpRabbitConfig;
 import com.coderandyli.dtp.core.utils.JsonUtil;
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
@@ -77,13 +77,13 @@ public class MetricsCollector {
         @Subscribe
         public void saveRequestInfo(ThreadTaskInfo taskInfo) {
             // send msg to MQ
-            rabbitTemplate.convertAndSend(RabbitConfig.METRICS_EXCHANGE, RabbitConfig.DTP_METRCS_STORAGE_TASK_ROUTING_KEY, JsonUtil.toJson(taskInfo));
+            rabbitTemplate.convertAndSend(DtpRabbitConfig.METRICS_EXCHANGE, DtpRabbitConfig.DTP_METRCS_STORAGE_TASK_ROUTING_KEY, JsonUtil.toJson(taskInfo));
         }
 
         @Subscribe
         public void saveThreadPoolInfo(ThreadPoolDynamicInfo threadPoolInfo) {
             // send msg to MQ
-            rabbitTemplate.convertAndSend(RabbitConfig.METRICS_EXCHANGE, RabbitConfig.DTP_METRCS_STORAGE_THREADPOOL_ROUTING_KEY, JsonUtil.toJson(threadPoolInfo));
+            rabbitTemplate.convertAndSend(DtpRabbitConfig.METRICS_EXCHANGE, DtpRabbitConfig.DTP_METRCS_STORAGE_THREADPOOL_ROUTING_KEY, JsonUtil.toJson(threadPoolInfo));
         }
     }
 }

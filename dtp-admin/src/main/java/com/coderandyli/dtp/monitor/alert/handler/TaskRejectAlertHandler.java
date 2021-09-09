@@ -50,7 +50,6 @@ public class TaskRejectAlertHandler extends AlertHandler {
                     statInfo;
             this.notification.notify(msg);
         } else {
-            this.notification.notify("【任务拒绝警告处理器】未达到阈值");
             if (log.isDebugEnabled()) {
                 log.debug("【任务拒绝警告处理器】未达到阈值，参数为：【{}】", statInfo);
             }

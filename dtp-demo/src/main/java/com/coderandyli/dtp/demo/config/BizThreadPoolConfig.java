@@ -34,16 +34,6 @@ public class BizThreadPoolConfig {
                 20,
                 TimeUnit.MILLISECONDS,
                 new SynchronousQueue<>());
-
-//        // 模拟任务拒绝
-//        DynamicThreadPoolExecutor dynamicThreadPoolExecutor = new DynamicThreadPoolExecutor(
-//                "dtp-demo",
-//                "biz-order",
-//                2,
-//                4,
-//                20,
-//                TimeUnit.MILLISECONDS,
-//                new SynchronousQueue<>());
         return dynamicThreadPoolExecutor;
     }
 }

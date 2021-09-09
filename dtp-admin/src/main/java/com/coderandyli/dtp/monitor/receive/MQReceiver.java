@@ -2,7 +2,7 @@ package com.coderandyli.dtp.monitor.receive;
 
 import com.coderandyli.dtp.core.ThreadPoolDynamicInfo;
 import com.coderandyli.dtp.core.ThreadTaskInfo;
-import com.coderandyli.dtp.core.config.RabbitConfig;
+import com.coderandyli.dtp.core.config.DtpRabbitConfig;
 import com.coderandyli.dtp.core.utils.JsonUtil;
 import com.coderandyli.dtp.monitor.metrics.storage.MetricsStorage;
 import com.rabbitmq.client.Channel;
@@ -25,20 +25,20 @@ public class MQReceiver {
     @Qualifier("mysqlMetricsStorage")
     private MetricsStorage metricsStorage;
 
-    @RabbitListener(queues = RabbitConfig.DTP_METRCS_STORAGE_THREADPOOL_QUEUE)
+    @RabbitListener(queues = DtpRabbitConfig.DTP_METRCS_STORAGE_THREADPOOL_QUEUE)
     public void receiveTheadPoolMsg(String msg, Message message, Channel channel) {
         ThreadPoolDynamicInfo threadPoolInfo = (ThreadPoolDynamicInfo) JsonUtil.fromJson(msg, ThreadPoolDynamicInfo.class);
         if (log.isDebugEnabled()) {
-            log.debug("receiver msg from queue 【{}】 the msg is 【{}】", RabbitConfig.DTP_METRCS_STORAGE_THREADPOOL_QUEUE, threadPoolInfo);
+            log.debug("receiver msg from queue 【{}】 the msg is 【{}】", DtpRabbitConfig.DTP_METRCS_STORAGE_THREADPOOL_QUEUE, threadPoolInfo);
         }
         metricsStorage.saveThreadPoolInfo(threadPoolInfo);
     }
 
-    @RabbitListener(queues = RabbitConfig.DTP_METRCS_STORAGE_TASK_QUEUE)
+    @RabbitListener(queues = DtpRabbitConfig.DTP_METRCS_STORAGE_TASK_QUEUE)
     public void receiveTaskMsg(String msg, Message message, Channel channel) {
         ThreadTaskInfo taskInfo = (ThreadTaskInfo) JsonUtil.fromJson(msg, ThreadTaskInfo.class);
         if (log.isDebugEnabled()) {
-            log.debug("receiver msg from queue 【{}】 the msg is 【{}】", RabbitConfig.DTP_METRCS_STORAGE_TASK_QUEUE, taskInfo);
+            log.debug("receiver msg from queue 【{}】 the msg is 【{}】", DtpRabbitConfig.DTP_METRCS_STORAGE_TASK_QUEUE, taskInfo);
         }
         metricsStorage.saveTaskInfo(taskInfo);
     }
